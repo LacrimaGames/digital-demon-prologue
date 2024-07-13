@@ -16,10 +16,24 @@ namespace DD.Builder
         public GameObject walls; // The walls GameObject
         public GameObject roof; // The roof GameObject
 
+        public GameObject resource; // The resource GameObject
+
+        public bool unlocksFunction = false;
+
         private int woodGathered = 0;
         private int stoneGathered = 0;
 
-        private void Start() {
+        private void Awake() // If object has other scripts, disable them until the building is finished
+        {
+            foreach (var components in GetComponents<MonoBehaviour>())
+            {
+                if(components == this) continue;
+                unlocksFunction = true;
+            }
+        }
+
+        private void Start()
+        {
             if (woodStorage != null)
             {
                 woodStorage.maxCapacity = woodNeeded;
@@ -35,21 +49,11 @@ namespace DD.Builder
         {
             if (woodStorage != null)
             {
-                // int woodAvailable = woodStorage.GetCurrentCapacity();
-                // int woodToGather = Mathf.Min(woodAvailable, woodNeeded - woodGathered);
-
-                // woodStorage.Unload(woodToGather);
-                // woodGathered += woodToGather;
                 woodGathered = woodStorage.GetCurrentCapacity();
             }
 
             if (needsStone && stoneStorage != null)
             {
-                // int stoneAvailable = stoneStorage.GetCurrentCapacity();
-                // int stoneToGather = Mathf.Min(stoneAvailable, stoneNeeded - stoneGathered);
-
-                // stoneStorage.Unload(stoneToGather);
-                // stoneGathered += stoneToGather;
                 stoneGathered = stoneStorage.GetCurrentCapacity();
             }
 
@@ -58,6 +62,8 @@ namespace DD.Builder
             if (IsBuildingComplete())
             {
                 DestroyStorages();
+                UnlockResource();
+                UnlockFunction();
                 Destroy(GetComponent<Builder>());
             }
         }
@@ -86,6 +92,25 @@ namespace DD.Builder
         bool IsBuildingComplete()
         {
             return woodGathered >= woodNeeded && (!needsStone || stoneGathered >= stoneNeeded);
+        }
+
+        void UnlockResource()
+        {
+            if (resource != null)
+            {
+                resource.SetActive(true);
+            }
+        }
+
+        void UnlockFunction()
+        {
+            if (unlocksFunction)
+            {
+                foreach (var function in GetComponents<MonoBehaviour>())
+                {
+                    function.enabled = true;
+                }
+            }
         }
 
         void DestroyStorages()

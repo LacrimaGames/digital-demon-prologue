@@ -1,16 +1,17 @@
 using DD.Builder.Buildings;
+using DD.Core.Player;
 using DD.Environment;
 using UnityEngine;
 
 namespace DD.Jobs
 {
-    public class Gatherer : MonoBehaviour
+    public class PlayerGatherer : MonoBehaviour
     {
-        public float detectionRadius = 3f; // The radius within which the player can detect and chop trees
-        public float gatheringSpeed = 1f; // Time between each chop action
+        public float detectionRadius = 3f; // The radius within which the player can detect and gather materials
+        public float gatheringSpeed = 1f; // Time between each gathering action
 
         public float unloadSpeed = 1; // Speed of unloading materials (units per second)
-        public int unloadAmount = 1;
+        public int unloadAmount = 1; // Amount of materials unloaded per action
         public float unloadRadius = 2f; // The radius within which the character can unload materials
 
         public float sellSpeed = 1; // Speed of unloading materials (units per second)
@@ -24,6 +25,14 @@ namespace DD.Jobs
         private float gatherTimer;
         private float unloadTimer;
         private float sellTimer;
+
+        private PlayerController playerController;
+
+
+        private void Start()
+        {
+            playerController = GetComponent<PlayerController>();
+        }
 
         void Update()
         {
@@ -93,7 +102,7 @@ namespace DD.Jobs
 
         private void Gather()
         {
-            if (gatherTimer <= 0f)
+            if (gatherTimer <= 0f && playerController.hasToolEquipped)
             {
                 Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius);
                 foreach (var hitCollider in hitColliders)

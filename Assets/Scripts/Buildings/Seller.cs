@@ -6,10 +6,8 @@ namespace DD.Builder.Buildings
 {
     public class Seller : MonoBehaviour
     {
-        public float detectionRadius = 2f; // The radius within which the character can sell materials
         public MaterialValue[] materialValues; // Array of material values for different types
         public int totalMoney = 0;
-
 
         public void SellMaterials(ResourceMaterial.Material material, int amount)
         {
@@ -28,12 +26,6 @@ namespace DD.Builder.Buildings
                     }
                 }
             }
-        }
-
-        void OnDrawGizmosSelected()
-        {
-            Gizmos.color = Color.yellow;
-            Gizmos.DrawWireSphere(transform.position, detectionRadius);
         }
     }
 
