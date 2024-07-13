@@ -9,9 +9,12 @@ namespace DD.Jobs
         public float detectionRadius = 3f; // The radius within which the player can detect and chop trees
         public float gatheringSpeed = 1f; // Time between each chop action
 
-        public int unloadSpeed = 1; // Speed of unloading materials (units per second)
+        public float unloadSpeed = 1; // Speed of unloading materials (units per second)
         public int unloadAmount = 1;
         public float unloadRadius = 2f; // The radius within which the character can unload materials
+
+        public float sellSpeed = 1; // Speed of unloading materials (units per second)
+        public int sellAmount = 1;
 
         public int amountHeld = 0; 
         public int maxAmountHeld = 10;
@@ -20,14 +23,45 @@ namespace DD.Jobs
 
         private float gatherTimer;
         private float unloadTimer;
+        private float sellTimer;
 
         void Update()
         {
             gatherTimer -= Time.deltaTime;
             unloadTimer -= Time.deltaTime;
+            sellTimer -= Time.deltaTime;
 
             Store();
             Gather();
+            Sell();
+        }
+
+        private void Sell()
+        {
+            if(sellTimer <= 0f)
+            {
+                Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius);
+                foreach (var hitCollider in hitColliders)
+                {
+                    Seller seller = hitCollider.GetComponent<Seller>();
+                    if (seller != null)
+                    {
+                        int ammountToSell = Mathf.Min(amountHeld, sellAmount);
+                        seller.SellMaterials(typeOfMaterialHeld, ammountToSell);
+
+                        amountHeld -= ammountToSell;
+
+                        if (amountHeld == 0)
+                        {
+                            typeOfMaterialHeld = ResourceMaterial.Material.None;
+                        }
+
+                        sellTimer = sellSpeed; // Reset the unload timer based on unload speed
+                        break; // Only unload to one storage at a time
+                    }
+                }
+            }
+
         }
 
         private void Store()
@@ -93,11 +127,7 @@ namespace DD.Jobs
 
         bool CanUnload(Storage storage, int unloadAmount)
         {
-            if (storage.storedMaterialType == typeOfMaterialHeld && amountHeld > 0)
-            {
-                return true;
-            }
-            if (typeOfMaterialHeld == storage.storedMaterialType && storage.currentCapacity + unloadAmount <= storage.maxCapacity)
+            if (storage.storedMaterialType == typeOfMaterialHeld && amountHeld > 0 && storage.currentCapacity + unloadAmount <= storage.maxCapacity)
             {
                 return true;
             }
