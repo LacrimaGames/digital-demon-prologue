@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using DD.Combat;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace DD.Core.AI
 {
@@ -13,12 +14,17 @@ namespace DD.Core.AI
         public Transform firePoint; // The point from which the bullet will be shot
         public List<Health.Combatants> targets;
         private float stoppingDistance = 7f;
-        public float moveSpeed = 3f;
 
-        public Transform goalDestination;
-        public Vector3 temporaryDestination;
+        private Transform goalDestination;
+        private Vector3 temporaryDestination;
+        NavMeshAgent navMeshAgent;
 
         public Health target;
+
+        private void Start()
+        {
+            navMeshAgent = GetComponent<NavMeshAgent>();
+        }
 
 
 
@@ -48,13 +54,13 @@ namespace DD.Core.AI
                         target = enemy;
                     }
                 }
-                
+
                 else
                 {
                     temporaryDestination = Vector3.zero;
                     target = null;
                 }
-                
+
             }
         }
 
@@ -69,7 +75,7 @@ namespace DD.Core.AI
                 // Move towards the destination
                 if (Vector3.Distance(transform.position, goalDestination.position) > stoppingDistance)
                 {
-                    transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
+                    navMeshAgent.SetDestination(goalDestination.position);
                 }
             }
             else
@@ -81,7 +87,8 @@ namespace DD.Core.AI
                 // Move towards the destination
                 if (Vector3.Distance(transform.position, temporaryDestination) > stoppingDistance)
                 {
-                    transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
+                    navMeshAgent.SetDestination(temporaryDestination);
+
                 }
             }
 
