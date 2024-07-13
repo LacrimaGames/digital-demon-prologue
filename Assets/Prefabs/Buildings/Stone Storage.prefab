@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1772441637709091384}
   - component: {fileID: 3837822597461923521}
   - component: {fileID: 5132640473238226268}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Stone Storage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   storedMaterialType: 2
-  maxCapacity: 100
+  maxCapacity: 50
   currentCapacity: 0
 --- !u!1 &2859885609647540646
 GameObject:
@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 6091703554614864243}
   - component: {fileID: 3787245432234956457}
   - component: {fileID: 3259239767191164841}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

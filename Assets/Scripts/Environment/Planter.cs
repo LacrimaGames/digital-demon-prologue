@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DD.Environment
@@ -7,6 +8,7 @@ namespace DD.Environment
         public GameObject treePrefab; // The tree prefab to spawn
         public Transform[] treePlots; // Array of transforms representing the tree plots
         public float checkInterval = 5f; // Interval (in seconds) to check for empty plots
+        private List<GameObject> availableTrees = new List<GameObject>();
 
         private float checkTimer;
 
@@ -29,13 +31,27 @@ namespace DD.Environment
 
         void RespawnTrees()
         {
+            availableTrees = new List<GameObject>();
+
             foreach (var plot in treePlots)
             {
                 if (plot.childCount == 0)
                 {
-                    Instantiate(treePrefab, plot.position, plot.rotation, plot);
+                    GameObject tree = Instantiate(treePrefab, plot.position, plot.rotation, plot);
+                    availableTrees.Add(tree);
+                }
+                else
+                {
+                    availableTrees.Add(plot.GetChild(0).gameObject);
                 }
             }
+
+
+        }
+        
+        public List<GameObject> GetAvailableTrees()
+        {
+            return availableTrees;
         }
 
         void OnDrawGizmos()

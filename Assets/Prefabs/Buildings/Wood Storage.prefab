@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 8735134378820347031}
   - component: {fileID: 5362948085659816654}
   - component: {fileID: 1757841899238835043}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Wood Storage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   storedMaterialType: 1
-  maxCapacity: 100
+  maxCapacity: 50
   currentCapacity: 0
 --- !u!1 &8468006054826820088
 GameObject:
@@ -81,7 +81,7 @@ GameObject:
   - component: {fileID: 379928128652995470}
   - component: {fileID: 7668939662007916489}
   - component: {fileID: 1060743798604257439}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
