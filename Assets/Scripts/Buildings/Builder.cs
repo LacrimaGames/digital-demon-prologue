@@ -25,11 +25,13 @@ namespace DD.Builder
         private int woodGathered = 0;
         private int stoneGathered = 0;
 
+        public GameObject previewPrefab;
+
         private void Awake() // If object has other scripts, disable them until the building is finished
         {
             foreach (var components in GetComponents<MonoBehaviour>())
             {
-                if(components == this) continue;
+                if (components == this) continue;
                 unlocksFunction = true;
             }
         }
@@ -45,6 +47,13 @@ namespace DD.Builder
             {
                 stoneStorage.maxCapacity = stoneNeeded;
             }
+        }
+
+        public void DisableBuilding()
+        {
+            floor.SetActive(false);
+            walls.SetActive(false);
+            roof.SetActive(false);
         }
 
         void Update()

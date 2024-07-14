@@ -32,11 +32,15 @@ namespace DD.Core.AI
         void Start()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
-            spawnPoint = assignedPlanter.spawnpointAIGatherer;
         }
 
         void Update()
         {
+            if (assignedPlanter == null)
+            {
+                assignedPlanter = transform.root.GetComponent<Planter>();
+            }
+
             FindNearestStorage();
 
             if (nearbyStorage == null) 

@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1772441637709091384}
   - component: {fileID: 3837822597461923521}
   - component: {fileID: 5132640473238226268}
-  m_Layer: 6
+  m_Layer: 8
   m_Name: Stone Storage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -86,6 +86,10 @@ PrefabInstance:
     - target: {fileID: 1769246778347430, guid: e0b1f68500561d34cab11357e0b27526, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Horseshoe_Pole_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1769246778347430, guid: e0b1f68500561d34cab11357e0b27526, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4610751108477304, guid: e0b1f68500561d34cab11357e0b27526, type: 3}
       propertyPath: m_LocalScale.x
@@ -169,6 +173,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Buildings_Floor_2x2_01P
       objectReference: {fileID: 0}
+    - target: {fileID: 1731383900522002, guid: 97a4c0aac51126c43b48361675b1f1e2, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4969095810050088, guid: 97a4c0aac51126c43b48361675b1f1e2, type: 3}
       propertyPath: m_LocalScale.x
       value: 2.1
@@ -251,6 +259,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_FlagPole_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1029456031619828, guid: 263b034a7fd811c40a36ebbe4c1709f7, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4137522240565702, guid: 263b034a7fd811c40a36ebbe4c1709f7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.99
@@ -312,6 +324,10 @@ PrefabInstance:
     - target: {fileID: 1769246778347430, guid: e0b1f68500561d34cab11357e0b27526, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Horseshoe_Pole_01 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1769246778347430, guid: e0b1f68500561d34cab11357e0b27526, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4610751108477304, guid: e0b1f68500561d34cab11357e0b27526, type: 3}
       propertyPath: m_LocalScale.x
@@ -395,6 +411,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SM_Prop_Horseshoe_Pole_01 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 1769246778347430, guid: e0b1f68500561d34cab11357e0b27526, type: 3}
+      propertyPath: m_Layer
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 4610751108477304, guid: e0b1f68500561d34cab11357e0b27526, type: 3}
       propertyPath: m_LocalScale.x
       value: 10
@@ -476,6 +496,10 @@ PrefabInstance:
     - target: {fileID: 1769246778347430, guid: e0b1f68500561d34cab11357e0b27526, type: 3}
       propertyPath: m_Name
       value: SM_Prop_Horseshoe_Pole_01 (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1769246778347430, guid: e0b1f68500561d34cab11357e0b27526, type: 3}
+      propertyPath: m_Layer
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4610751108477304, guid: e0b1f68500561d34cab11357e0b27526, type: 3}
       propertyPath: m_LocalScale.x
