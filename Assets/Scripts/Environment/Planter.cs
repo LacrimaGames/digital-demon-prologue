@@ -12,6 +12,8 @@ namespace DD.Environment
 
         private float checkTimer;
 
+        public Transform spawnpointAIGatherer;
+
         void Start()
         {
             checkTimer = checkInterval;

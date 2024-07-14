@@ -15,6 +15,8 @@ namespace DD.Builder
         public GameObject floor; // The floor GameObject
         public GameObject walls; // The walls GameObject
         public GameObject roof; // The roof GameObject
+        public GameObject constructionFence; // The fence GameObject
+
 
         public GameObject resource; // The resource GameObject
 
@@ -61,10 +63,9 @@ namespace DD.Builder
 
             if (IsBuildingComplete())
             {
-                DestroyStorages();
                 UnlockResource();
                 UnlockFunction();
-                Destroy(GetComponent<Builder>());
+                CleanUp();
             }
         }
 
@@ -86,6 +87,16 @@ namespace DD.Builder
             if (totalGathered >= totalRequired)
             {
                 roof.SetActive(true);
+            }
+
+            if (woodStorage != null && woodNeeded == woodGathered)
+            {
+                Destroy(woodStorage.gameObject);
+            }
+
+            if (needsStone && stoneStorage != null && stoneNeeded == stoneGathered)
+            {
+                Destroy(stoneStorage.gameObject);
             }
         }
 
@@ -113,17 +124,10 @@ namespace DD.Builder
             }
         }
 
-        void DestroyStorages()
+        void CleanUp()
         {
-            if (woodStorage != null)
-            {
-                Destroy(woodStorage.gameObject);
-            }
-
-            if (needsStone && stoneStorage != null)
-            {
-                Destroy(stoneStorage.gameObject);
-            }
+            Destroy(constructionFence);
+            Destroy(GetComponent<Builder>());
         }
     }
 }
