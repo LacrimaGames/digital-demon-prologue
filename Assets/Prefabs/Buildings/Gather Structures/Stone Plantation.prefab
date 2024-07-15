@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7570122985955864694}
   - component: {fileID: 648996594407133004}
   - component: {fileID: 2393425970082410795}
-  - component: {fileID: 7413166211297886904}
   m_Layer: 8
   m_Name: Stone Plantation
   m_TagString: Untagged
@@ -77,27 +76,6 @@ NavMeshObstacle:
   m_CarveOnlyStationary: 1
   m_Center: {x: 1, y: 0, z: 0}
   m_TimeToStationary: 0.5
---- !u!65 &7413166211297886904
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1376308887518107195}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 13, y: 1, z: 23}
-  m_Center: {x: 1, y: 0.5, z: 0}
 --- !u!1 &1908954384456109475
 GameObject:
   m_ObjectHideFlags: 0

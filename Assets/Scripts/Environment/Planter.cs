@@ -37,14 +37,14 @@ namespace DD.Environment
 
             foreach (var plot in treePlots)
             {
-                if (plot.childCount == 0)
+                if (plot.childCount == 1)
                 {
                     GameObject tree = Instantiate(treePrefab, plot.position, plot.rotation, plot);
                     availableTrees.Add(tree);
                 }
                 else
                 {
-                    availableTrees.Add(plot.GetChild(0).gameObject);
+                    availableTrees.Add(plot.GetChild(1).gameObject);
                 }
             }
 
