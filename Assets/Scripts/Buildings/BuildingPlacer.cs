@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UIElements;
 
 namespace DD.Builder.Buildings
 {
@@ -11,7 +12,7 @@ namespace DD.Builder.Buildings
         public LayerMask towerPlacementGround;
         public LayerMask ui;
 
-        Collider prefabCollider;
+        BoxCollider prefabCollider;
 
 
         [System.Serializable]
@@ -51,7 +52,7 @@ namespace DD.Builder.Buildings
                 currentPrefab = buildings[prefabIndex].buildingPrefab;
                 currentPrefabCost = buildings[prefabIndex].cost;
                 prefabPreview = Instantiate(currentPrefab.GetComponent<Builder>().previewPrefab);
-                prefabCollider = prefabPreview.GetComponent<Collider>();
+                prefabCollider = prefabPreview.GetComponent<BoxCollider>();
                 // prefabPreview.GetComponent<Collider>().enabled = false;
                 isPlacing = true;
             }
@@ -109,7 +110,7 @@ namespace DD.Builder.Buildings
                 new Vector3(bounds.max.x, bounds.min.y, bounds.max.z)
             };
 
-            if(currentPrefab.name == "Tower")
+            if(currentPrefab.tag == "Tower")
             {
                 foreach (var point in checkPoints)
                 {

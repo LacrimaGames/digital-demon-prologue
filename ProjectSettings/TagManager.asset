@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Countdown
+  - GoldAmount
+  - MaterialAmount
+  - MaterialType
+  - Tower
   layers:
   - Default
   - TransparentFX

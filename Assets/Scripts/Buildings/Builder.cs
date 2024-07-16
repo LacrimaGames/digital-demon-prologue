@@ -19,6 +19,8 @@ namespace DD.Builder
 
 
         public GameObject resource; // The resource GameObject
+        public GameObject upgradeButton;
+
 
         public bool unlocksFunction = false;
 
@@ -47,6 +49,11 @@ namespace DD.Builder
             {
                 stoneStorage.maxCapacity = stoneNeeded;
             }
+
+            if (upgradeButton != null)
+            {
+                upgradeButton.SetActive(false);
+            }
         }
 
         public void DisableBuilding()
@@ -74,6 +81,7 @@ namespace DD.Builder
             {
                 UnlockResource();
                 UnlockFunction();
+                UnlockUpgrade();
                 CleanUp();
             }
         }
@@ -130,6 +138,14 @@ namespace DD.Builder
                 {
                     function.enabled = true;
                 }
+            }
+        }
+
+        void UnlockUpgrade()
+        {
+            if (upgradeButton != null)
+            {
+                upgradeButton.SetActive(true);
             }
         }
 
