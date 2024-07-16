@@ -15,9 +15,9 @@ public class ResourceTracker : MonoBehaviour
 
     private int amountOfGold;
 
-    public TMP_Text materialText;
-    public TMP_Text goldText;
-    public TMP_Text amountText;
+    private TMP_Text materialText;
+    private TMP_Text goldText;
+    private TMP_Text amountText;
 
     public static ResourceTracker Instance { get; private set; }
 
@@ -34,15 +34,34 @@ public class ResourceTracker : MonoBehaviour
         }
     }
 
+    private void Start() {
+        if (materialText == null)
+        {
+            materialText = GameObject.FindGameObjectWithTag("MaterialType").GetComponent<TMP_Text>();
+        }
+
+        if (goldText == null)
+        {
+            goldText = GameObject.FindGameObjectWithTag("GoldAmount").GetComponent<TMP_Text>();
+        }
+
+        if (amountText == null)
+        {
+            amountText = GameObject.FindGameObjectWithTag("MaterialAmount").GetComponent<TMP_Text>();
+        }
+    }
+
     // Update is called once per frame
     void Update()
     {
+        if (FindAnyObjectByType<PlayerGatherer>() != null)
+        {
+            currentMaterialHeld = FindAnyObjectByType<PlayerGatherer>().typeOfMaterialHeld;
+            amountOfMaterialHeld = FindAnyObjectByType<PlayerGatherer>().amountHeld;
+            maxAmountOfMaterialHeld = FindAnyObjectByType<PlayerGatherer>().maxAmountHeld;
+        }
+
         goldText.text = amountOfGold.ToString();
-
-        currentMaterialHeld = FindAnyObjectByType<PlayerGatherer>().typeOfMaterialHeld;
-        amountOfMaterialHeld = FindAnyObjectByType<PlayerGatherer>().amountHeld;
-        maxAmountOfMaterialHeld = FindAnyObjectByType<PlayerGatherer>().maxAmountHeld;
-
         amountText.text = amountOfMaterialHeld.ToString() + " / " + maxAmountOfMaterialHeld;
 
         if (currentMaterialHeld == ResourceMaterial.Material.Wood)

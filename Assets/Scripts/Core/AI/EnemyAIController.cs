@@ -15,7 +15,7 @@ namespace DD.Core.AI
         public List<Health.Combatants> targets;
         private float stoppingDistance = 7f;
 
-        private Transform goalDestination;
+        public Transform goalDestination;
         private Vector3 temporaryDestination;
         NavMeshAgent navMeshAgent;
 
@@ -24,10 +24,11 @@ namespace DD.Core.AI
         private void Start()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
+            if(goalDestination == null)
+            {
+                goalDestination = EnemySpawner.Instance.endGoal;
+            }
         }
-
-
-
 
         private float fireCooldown = 0f;
 

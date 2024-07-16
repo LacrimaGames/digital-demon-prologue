@@ -10,6 +10,8 @@ namespace DD.Environment
         public float checkInterval = 5f; // Interval (in seconds) to check for empty plots
         private List<GameObject> availableTrees = new List<GameObject>();
 
+        public GameObject upgradeUnlock;
+
         private float checkTimer;
 
         public Transform spawnpointAIGatherer;
@@ -47,15 +49,21 @@ namespace DD.Environment
                     availableTrees.Add(plot.GetChild(1).gameObject);
                 }
             }
-
-
         }
-        
+
         public List<GameObject> GetAvailableTrees()
         {
             return availableTrees;
         }
 
+        private void OnMouseDown()
+        {
+            if(upgradeUnlock.activeSelf == false)
+            {
+                upgradeUnlock.SetActive(true);
+            }
+        }
+        
         void OnDrawGizmos()
         {
             Gizmos.color = Color.green;

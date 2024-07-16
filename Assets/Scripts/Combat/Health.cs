@@ -1,3 +1,4 @@
+using DD.Core;
 using UnityEngine;
 
 namespace DD.Combat
@@ -31,6 +32,10 @@ namespace DD.Combat
         void Die()
         {
             Destroy(gameObject);
+            if(gameObject.GetComponent<Health>().combatants == Combatants.EnemyAI)
+            {
+                EnemySpawner.Instance.KillEnemy(gameObject);
+            }
         }
     }
 }
