@@ -20,7 +20,7 @@ namespace DD.Builder.Buildings
                     if (materialValue.materialType == material)
                     {
                         int totalValue = materialAmount * materialValue.value;
-                        totalMoney += totalValue;
+                        ResourceTracker.Instance.AddGold(totalValue);
                         //PlayerMoney.AddMoney(totalValue); // Add money to the player's total
                         break;
                     }

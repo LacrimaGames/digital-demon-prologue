@@ -15,25 +15,29 @@ public class ResourceTracker : MonoBehaviour
 
     private int amountOfGold;
 
-
     public TMP_Text materialText;
     public TMP_Text goldText;
     public TMP_Text amountText;
 
-    // Start is called before the first frame update
-    void Start()
+    public static ResourceTracker Instance { get; private set; }
+
+    private void Awake()
     {
-        
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(FindObjectOfType<Seller>() != null)
-        {
-            amountOfGold = FindObjectOfType<Seller>().totalMoney;
-            goldText.text = amountOfGold.ToString();
-        }
+        goldText.text = amountOfGold.ToString();
 
         currentMaterialHeld = FindAnyObjectByType<PlayerGatherer>().typeOfMaterialHeld;
         amountOfMaterialHeld = FindAnyObjectByType<PlayerGatherer>().amountHeld;
@@ -41,7 +45,7 @@ public class ResourceTracker : MonoBehaviour
 
         amountText.text = amountOfMaterialHeld.ToString() + " / " + maxAmountOfMaterialHeld;
 
-        if(currentMaterialHeld == ResourceMaterial.Material.Wood)
+        if (currentMaterialHeld == ResourceMaterial.Material.Wood)
         {
             materialText.text = "Wood";
         }
@@ -54,4 +58,21 @@ public class ResourceTracker : MonoBehaviour
             materialText.text = "None";
         }
     }
+
+    public void AddGold(int amount)
+    {
+        amountOfGold += amount;
+    }
+
+    public bool SpendGold(int amount)
+    {
+        if (amountOfGold >= amount)
+        {
+            amountOfGold -= amount;
+            return true;
+        }
+        return false;
+    }
+
+
 }

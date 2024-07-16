@@ -75,7 +75,6 @@ GameObject:
   - component: {fileID: 3805120656871712283}
   - component: {fileID: 8192360052881264626}
   - component: {fileID: 7498587915685531869}
-  - component: {fileID: 7525970940855948441}
   - component: {fileID: 6931615159388158471}
   m_Layer: 8
   m_Name: Tower
@@ -99,7 +98,7 @@ Transform:
   m_Children:
   - {fileID: 1453135869759510559}
   - {fileID: 8335047118735496230}
-  - {fileID: 4239268593372475307}
+  - {fileID: 1847441135382139027}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!114 &3805120656871712283
@@ -117,7 +116,7 @@ MonoBehaviour:
   woodStorage: {fileID: 1364727827811873746}
   woodNeeded: 10
   needsStone: 1
-  stoneStorage: {fileID: 7311276534281861327}
+  stoneStorage: {fileID: 7616094139687331729}
   stoneNeeded: 10
   floor: {fileID: 8635555151024240806}
   walls: {fileID: 6219282081859773181}
@@ -158,33 +157,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   combatants: 4
   health: 100
---- !u!54 &7525970940855948441
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 854290010294142324}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!208 &6931615159388158471
 NavMeshObstacle:
   m_ObjectHideFlags: 0
@@ -263,8 +235,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 1.03}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 0.6, y: 0.6, z: 0.6}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1520757243106794810}
   - {fileID: 665114527231948984}
@@ -449,7 +421,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8735134378820347031, guid: e62c7f4b98dce33439d1851cdf961704, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4
+      value: -1.482
       objectReference: {fileID: 0}
     - target: {fileID: 8735134378820347031, guid: e62c7f4b98dce33439d1851cdf961704, type: 3}
       propertyPath: m_LocalPosition.y
@@ -457,7 +429,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8735134378820347031, guid: e62c7f4b98dce33439d1851cdf961704, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8
+      value: 5.05
       objectReference: {fileID: 0}
     - target: {fileID: 8735134378820347031, guid: e62c7f4b98dce33439d1851cdf961704, type: 3}
       propertyPath: m_LocalRotation.w
@@ -1026,19 +998,27 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 4318811274126896384, guid: bf6d2e179c04fcc4dbfb04abfe5f9666, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.268
+      objectReference: {fileID: 0}
+    - target: {fileID: 4318811274126896384, guid: bf6d2e179c04fcc4dbfb04abfe5f9666, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 5.05
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf6d2e179c04fcc4dbfb04abfe5f9666, type: 3}
---- !u!4 &4239268593372475307 stripped
+--- !u!4 &1847441135382139027 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1772441637709091384, guid: bf6d2e179c04fcc4dbfb04abfe5f9666, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4318811274126896384, guid: bf6d2e179c04fcc4dbfb04abfe5f9666, type: 3}
   m_PrefabInstance: {fileID: 2471370174501797267}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7311276534281861327 stripped
+--- !u!114 &7616094139687331729 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5132640473238226268, guid: bf6d2e179c04fcc4dbfb04abfe5f9666, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5475778259936598530, guid: bf6d2e179c04fcc4dbfb04abfe5f9666, type: 3}
   m_PrefabInstance: {fileID: 2471370174501797267}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -1182,6 +1162,10 @@ PrefabInstance:
     - target: {fileID: 5822638627039024889, guid: 299143447e7e3c94286f0339e03e1708, type: 3}
       propertyPath: m_Layer
       value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6527587094339386119, guid: 299143447e7e3c94286f0339e03e1708, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6957913604194903757, guid: 299143447e7e3c94286f0339e03e1708, type: 3}
       propertyPath: m_Layer

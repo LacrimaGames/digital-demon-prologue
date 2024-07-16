@@ -209,12 +209,12 @@ BoxCollider:
     serializedVersion: 2
     m_Bits: 0
   m_LayerOverridePriority: 0
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 14, y: 1, z: 14}
-  m_Center: {x: 0, y: 1, z: -0.4}
+  m_Center: {x: 0, y: 3.5, z: -0.4}
 --- !u!1 &3751355481269021217
 GameObject:
   m_ObjectHideFlags: 0
@@ -225,7 +225,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4019168398049718687}
   - component: {fileID: 6707361995257773971}
-  - component: {fileID: 1382347504944609288}
   m_Layer: 2
   m_Name: Seller
   m_TagString: Untagged
@@ -270,24 +269,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 6, y: 1, z: 6}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1382347504944609288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3751355481269021217}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 423126b96fd9432499f08277c4275c7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  materialValues:
-  - materialType: 1
-    value: 1
-  - materialType: 2
-    value: 2
-  totalMoney: 0
 --- !u!1 &4351456889460273756
 GameObject:
   m_ObjectHideFlags: 0

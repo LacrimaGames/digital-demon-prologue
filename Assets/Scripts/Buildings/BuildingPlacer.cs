@@ -1,18 +1,34 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace DD.Builder.Buildings
 {
     public class BuildingPlacer : MonoBehaviour
     {
         public Camera playerCamera;
-        public LayerMask groundLayer;
-        public LayerMask placementBlocker;
-        public GameObject[] buildingPrefabs;
+        public LayerMask structuresPlacementGround;
+        public LayerMask towerPlacementGround;
+        public LayerMask ui;
+
+        Collider prefabCollider;
+
+
+        [System.Serializable]
+        public class BuildingData
+        {
+            public GameObject buildingPrefab;
+            public int cost;
+        }
+
+        public List<BuildingData> buildings;
+
+        // public GameObject[] buildingPrefabs;
 
         private GameObject currentPrefab;
         private GameObject prefabPreview;
         private bool isPlacing = false;
+        private int currentPrefabCost = 0;
 
         void Update()
         {
@@ -25,15 +41,17 @@ namespace DD.Builder.Buildings
 
         public void StartPlacingBuilding(int prefabIndex)
         {
-            if (prefabIndex >= 0 && prefabIndex < buildingPrefabs.Length)
+            if (prefabIndex >= 0 && prefabIndex < buildings.Count)
             {
                 if (prefabPreview != null)
                 {
                     Destroy(prefabPreview);
                 }
 
-                currentPrefab = buildingPrefabs[prefabIndex];
+                currentPrefab = buildings[prefabIndex].buildingPrefab;
+                currentPrefabCost = buildings[prefabIndex].cost;
                 prefabPreview = Instantiate(currentPrefab.GetComponent<Builder>().previewPrefab);
+                prefabCollider = prefabPreview.GetComponent<Collider>();
                 // prefabPreview.GetComponent<Collider>().enabled = false;
                 isPlacing = true;
             }
@@ -44,22 +62,29 @@ namespace DD.Builder.Buildings
             Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, structuresPlacementGround))
             {
                 prefabPreview.transform.position = hit.point;
 
-                if (Input.GetMouseButtonDown(0) && !Physics.Raycast(ray, out hit, Mathf.Infinity, placementBlocker)) // Left mouse button
+                if (Input.GetMouseButtonDown(0)) // Left mouse button
                 {
                     if (IsPlacementValid())
                     {
-                        PlaceBuilding();
+                        if (ResourceTracker.Instance.SpendGold(currentPrefabCost) && !EventSystem.current.IsPointerOverGameObject())
+                        {
+                            PlaceBuilding();
+                        }
+                        else
+                        {
+                            Debug.Log("Not enough gold to place the building.");
+                        }
                     }
                     else
                     {
                         Debug.Log("Invalid placement: The whole prefab is not on the ground.");
                     }
                 }
-                else if (Input.GetMouseButtonDown(1) || Input.GetKey(KeyCode.Escape) ) // Right mouse button to cancel
+                else if (Input.GetMouseButtonDown(1) || Input.GetKey(KeyCode.Escape)) // Right mouse button to cancel
                 {
                     CancelPlacing();
                 }
@@ -68,7 +93,8 @@ namespace DD.Builder.Buildings
 
         bool IsPlacementValid()
         {
-            Collider prefabCollider = prefabPreview.GetComponent<Collider>();
+            prefabCollider.enabled = true; // Enable collider to check for collisions
+
             Bounds bounds = prefabCollider.bounds;
 
             List<Vector3> checkPoints = new List<Vector3>
@@ -83,20 +109,43 @@ namespace DD.Builder.Buildings
                 new Vector3(bounds.max.x, bounds.min.y, bounds.max.z)
             };
 
-            foreach (var point in checkPoints)
+            if(currentPrefab.name == "Tower")
             {
-                Ray ray = new Ray(point + Vector3.up * 10f, Vector3.down); // Cast ray downwards from above the point
-                if (!Physics.Raycast(ray, 20f, groundLayer))
+                foreach (var point in checkPoints)
                 {
-                    return false;
+                    Ray ray = new Ray(point + Vector3.up * 10f, Vector3.down); // Cast ray downwards from above the point
+                    if (!Physics.Raycast(ray, 20f, towerPlacementGround))
+                    {
+                        return false;
+                    }
                 }
-                if (Physics.Raycast(ray, 20f, placementBlocker))
+            }
+            else
+            {
+                foreach (var point in checkPoints)
                 {
-                    return false;
+                    Ray ray = new Ray(point + Vector3.up * 10f, Vector3.down); // Cast ray downwards from above the point
+                    if (Physics.Raycast(ray, 20f, towerPlacementGround))
+                    {
+                        return false;
+                    }
+                    if (!Physics.Raycast(ray, 20f, structuresPlacementGround))
+                    {
+                        return false;
+                    }
                 }
             }
 
             return true;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if (isPlacing && prefabCollider != null)
+            {
+                Gizmos.color = Color.green;
+                Gizmos.DrawWireCube(prefabCollider.bounds.center, prefabCollider.bounds.size);
+            }
         }
 
         void PlaceBuilding()

@@ -667,7 +667,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6085159507150382244}
-  - {fileID: 4312892944601549577}
+  - {fileID: 1778355569221547057}
   - {fileID: 3526775746988972031}
   - {fileID: 4530580924784665631}
   - {fileID: 3880962036282401259}
@@ -688,7 +688,7 @@ MonoBehaviour:
   woodStorage: {fileID: 5885617918237208587}
   woodNeeded: 20
   needsStone: 1
-  stoneStorage: {fileID: 7239622566945021037}
+  stoneStorage: {fileID: 7547853067108172595}
   stoneNeeded: 20
   floor: {fileID: 2486185075088721674}
   walls: {fileID: 451527305281081484}
@@ -696,6 +696,7 @@ MonoBehaviour:
   constructionFence: {fileID: 2602384889965403416}
   resource: {fileID: 7998451110136092478}
   unlocksFunction: 0
+  previewPrefab: {fileID: 0}
 --- !u!1 &3007117695537049470
 GameObject:
   m_ObjectHideFlags: 0
@@ -2390,19 +2391,23 @@ PrefabInstance:
       propertyPath: m_Name
       value: Stone Storage
       objectReference: {fileID: 0}
+    - target: {fileID: 4318811274126896384, guid: bf6d2e179c04fcc4dbfb04abfe5f9666, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.99
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf6d2e179c04fcc4dbfb04abfe5f9666, type: 3}
---- !u!4 &4312892944601549577 stripped
+--- !u!4 &1778355569221547057 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 1772441637709091384, guid: bf6d2e179c04fcc4dbfb04abfe5f9666, type: 3}
+  m_CorrespondingSourceObject: {fileID: 4318811274126896384, guid: bf6d2e179c04fcc4dbfb04abfe5f9666, type: 3}
   m_PrefabInstance: {fileID: 2540737240598878513}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7239622566945021037 stripped
+--- !u!114 &7547853067108172595 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5132640473238226268, guid: bf6d2e179c04fcc4dbfb04abfe5f9666, type: 3}
+  m_CorrespondingSourceObject: {fileID: 5475778259936598530, guid: bf6d2e179c04fcc4dbfb04abfe5f9666, type: 3}
   m_PrefabInstance: {fileID: 2540737240598878513}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -2500,7 +2505,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8735134378820347031, guid: e62c7f4b98dce33439d1851cdf961704, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.3395944
+      value: -0.46
       objectReference: {fileID: 0}
     - target: {fileID: 8735134378820347031, guid: e62c7f4b98dce33439d1851cdf961704, type: 3}
       propertyPath: m_LocalPosition.y
@@ -2508,7 +2513,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8735134378820347031, guid: e62c7f4b98dce33439d1851cdf961704, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1.7469394
+      value: -0.07
       objectReference: {fileID: 0}
     - target: {fileID: 8735134378820347031, guid: e62c7f4b98dce33439d1851cdf961704, type: 3}
       propertyPath: m_LocalRotation.w

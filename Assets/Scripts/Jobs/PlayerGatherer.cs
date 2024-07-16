@@ -40,7 +40,7 @@ namespace DD.Jobs
             unloadTimer -= Time.deltaTime;
             sellTimer -= Time.deltaTime;
 
-            Store();
+            Build();
             Gather();
             Sell();
         }
@@ -73,7 +73,7 @@ namespace DD.Jobs
 
         }
 
-        private void Store()
+        private void Build()
         {
             if (unloadTimer <= 0f)
             {
