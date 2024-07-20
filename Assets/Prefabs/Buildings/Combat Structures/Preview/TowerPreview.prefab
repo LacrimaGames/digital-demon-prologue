@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 2184740316083692697}
   m_Layer: 2
   m_Name: TowerPreview
-  m_TagString: Untagged
+  m_TagString: Preview
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647

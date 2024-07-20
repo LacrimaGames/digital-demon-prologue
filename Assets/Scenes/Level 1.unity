@@ -2871,6 +2871,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 59.099976
       objectReference: {fileID: 0}
+    - target: {fileID: 3181957592515406323, guid: 4a9869624926ad34bb5dd7930d3a38e1, type: 3}
+      propertyPath: buildings.Array.data[2].buildingPrefab
+      value: 
+      objectReference: {fileID: 854290010294142324, guid: 0d9a76d4975369c48b21b9ca8beb88a2, type: 3}
     - target: {fileID: 5100578630493078733, guid: 4a9869624926ad34bb5dd7930d3a38e1, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

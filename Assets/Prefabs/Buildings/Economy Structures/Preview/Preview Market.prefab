@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 9201412143673610175}
   m_Layer: 2
   m_Name: Preview Market
-  m_TagString: Untagged
+  m_TagString: Preview
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
@@ -213,8 +213,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 14, y: 1, z: 14}
-  m_Center: {x: 0, y: 3.5, z: -0.4}
+  m_Size: {x: 6, y: 1, z: 5.8}
+  m_Center: {x: 0, y: 0, z: -0.69}
 --- !u!1 &3751355481269021217
 GameObject:
   m_ObjectHideFlags: 0
@@ -268,7 +268,7 @@ BoxCollider:
   m_Enabled: 1
   serializedVersion: 3
   m_Size: {x: 6, y: 1, z: 6}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0.5, z: 0}
 --- !u!1 &4351456889460273756
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
+using DD.Core;
+using DD.Core.Player;
 using UnityEngine;
+using UnityEngine.Diagnostics;
 using UnityEngine.EventSystems;
-using UnityEngine.UIElements;
 
 namespace DD.Builder.Buildings
 {
@@ -10,10 +12,9 @@ namespace DD.Builder.Buildings
         public Camera playerCamera;
         public LayerMask structuresPlacementGround;
         public LayerMask towerPlacementGround;
-        public LayerMask ui;
+        public LayerMask placementBlocker;
 
         BoxCollider prefabCollider;
-
 
         [System.Serializable]
         public class BuildingData
@@ -33,6 +34,12 @@ namespace DD.Builder.Buildings
 
         void Update()
         {
+            if(!FindFirstObjectByType<PlayerController>().isActiveAndEnabled)
+            {
+                CancelPlacing();
+                return;
+            }
+
             if (isPlacing)
             {
                 HandlePlacement();
@@ -63,9 +70,19 @@ namespace DD.Builder.Buildings
             Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, structuresPlacementGround))
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, structuresPlacementGround) || Physics.Raycast(ray, out hit, Mathf.Infinity, towerPlacementGround))
             {
                 prefabPreview.transform.position = hit.point;
+
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, placementBlocker) || !IsPlacementValid())
+                {
+                    Debug.Log("Cannot Place here");
+                }
+                else if (IsPlacementValid())
+                {
+                    Debug.Log("Can Place");
+                }
+
 
                 if (Input.GetMouseButtonDown(0)) // Left mouse button
                 {
@@ -115,17 +132,25 @@ namespace DD.Builder.Buildings
                 foreach (var point in checkPoints)
                 {
                     Ray ray = new Ray(point + Vector3.up * 10f, Vector3.down); // Cast ray downwards from above the point
+                    if (Physics.Raycast(ray, 20f, placementBlocker))
+                    {
+                        return false;
+                    }
                     if (!Physics.Raycast(ray, 20f, towerPlacementGround))
                     {
                         return false;
                     }
                 }
             }
-            else
+            if(currentPrefab.tag == "Structure")
             {
                 foreach (var point in checkPoints)
                 {
                     Ray ray = new Ray(point + Vector3.up * 10f, Vector3.down); // Cast ray downwards from above the point
+                    if (Physics.Raycast(ray, 20f, placementBlocker))
+                    {
+                        return false;
+                    }
                     if (Physics.Raycast(ray, 20f, towerPlacementGround))
                     {
                         return false;
@@ -158,7 +183,10 @@ namespace DD.Builder.Buildings
 
         void CancelPlacing()
         {
-            Destroy(prefabPreview);
+            if(prefabPreview != null)
+            {
+                Destroy(prefabPreview);
+            }
             isPlacing = false;
         }
     }
