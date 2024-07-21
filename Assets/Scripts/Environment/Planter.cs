@@ -5,16 +5,14 @@ namespace DD.Environment
 {
     public class Planter : MonoBehaviour
     {
-        public GameObject treePrefab; // The tree prefab to spawn
-        public Transform[] treePlots; // Array of transforms representing the tree plots
+        public GameObject resourcePrefab; // The tree prefab to spawn
+        public Transform[] resourcePlots; // Array of transforms representing the tree plots
         public float checkInterval = 5f; // Interval (in seconds) to check for empty plots
-        private List<GameObject> availableTrees = new List<GameObject>();
+        private List<GameObject> availableResources = new List<GameObject>();
 
         public GameObject upgradeUnlock;
 
         private float checkTimer;
-
-        public Transform spawnpointAIGatherer;
 
         void Start()
         {
@@ -35,25 +33,25 @@ namespace DD.Environment
 
         void RespawnTrees()
         {
-            availableTrees = new List<GameObject>();
+            availableResources = new List<GameObject>();
 
-            foreach (var plot in treePlots)
+            foreach (var plot in resourcePlots)
             {
                 if (plot.childCount == 1)
                 {
-                    GameObject tree = Instantiate(treePrefab, plot.position, plot.rotation, plot);
-                    availableTrees.Add(tree);
+                    GameObject tree = Instantiate(resourcePrefab, plot.position, plot.rotation, plot);
+                    availableResources.Add(tree);
                 }
                 else
                 {
-                    availableTrees.Add(plot.GetChild(1).gameObject);
+                    availableResources.Add(plot.GetChild(1).gameObject);
                 }
             }
         }
 
         public List<GameObject> GetAvailableTrees()
         {
-            return availableTrees;
+            return availableResources;
         }
 
         private void OnMouseDown()
@@ -67,7 +65,7 @@ namespace DD.Environment
         void OnDrawGizmos()
         {
             Gizmos.color = Color.green;
-            foreach (var plot in treePlots)
+            foreach (var plot in resourcePlots)
             {
                 Gizmos.DrawWireCube(plot.position, new Vector3(1, 1, 1));
             }

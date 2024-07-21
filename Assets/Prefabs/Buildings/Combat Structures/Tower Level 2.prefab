@@ -144,8 +144,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   detectionRadius: 20.13
-  fireRate: 1
-  damage: 10
+  fireRate: 2
+  damage: 15
   bulletPrefab: {fileID: 6582589674814875814, guid: 9086390e404b6854d9b601b6bca16c83, type: 3}
   firePoint: {fileID: 2675957595596658821}
   targets: 02000000

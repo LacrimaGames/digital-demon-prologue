@@ -9,6 +9,7 @@ namespace DD.Core.AI
 {
     public class AIGatherer : MonoBehaviour
     {
+        public ResourceMaterial.Material materialToGather;
         public float gatherRange = 2f; // Range within which the gatherer can gather resources
         public int maxAmountHeld = 10; // Maximum amount of resources the gatherer can carry
         public float gatherTime = 2f; // Time taken to gather one resource
@@ -36,9 +37,15 @@ namespace DD.Core.AI
 
         void Update()
         {
+
             if (assignedPlanter == null)
             {
                 assignedPlanter = transform.root.GetComponent<Planter>();
+            }
+
+            if (materialToGather == ResourceMaterial.Material.None)
+            {
+                materialToGather = assignedPlanter.GetAvailableTrees()[0].GetComponent<ResourceMaterial>().resourceMaterial;
             }
 
             FindNearestStorage();
@@ -70,7 +77,7 @@ namespace DD.Core.AI
             {
                 foreach (var potentialStorage in FindObjectsOfType<Storage>())
                 {
-                    if (potentialStorage.storedMaterialType != ResourceMaterial.Material.Wood || potentialStorage.currentCapacity == potentialStorage.maxCapacity) continue;
+                    if (potentialStorage.storedMaterialType != materialToGather || potentialStorage.currentCapacity == potentialStorage.maxCapacity) continue;
                     nearbyStorage = potentialStorage;
                     break;
                 }

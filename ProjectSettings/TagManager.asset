@@ -9,6 +9,8 @@ TagManager:
   - MaterialAmount
   - MaterialType
   - Tower
+  - Structure
+  - Preview
   layers:
   - Default
   - TransparentFX
@@ -17,7 +19,7 @@ TagManager:
   - Water
   - UI
   - Ignore NavMesh Baking
-  - 
+  - Placement Blocker
   - Building
   - Tower Placement Ground
   - Structures Placement Ground

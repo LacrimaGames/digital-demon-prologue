@@ -609,8 +609,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91827bc183d642d4bb89dd9abbecae52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  treePrefab: {fileID: 4507367942400792899, guid: d18f7d554dddfd146bf2d0c7ac557f52, type: 3}
-  treePlots:
+  resourcePrefab: {fileID: 4507367942400792899, guid: d18f7d554dddfd146bf2d0c7ac557f52, type: 3}
+  resourcePlots:
   - {fileID: 6952749150415399032}
   - {fileID: 5752362964898780914}
   - {fileID: 7582959702799682630}
@@ -633,7 +633,6 @@ MonoBehaviour:
   - {fileID: 7141849776096468226}
   checkInterval: 10
   upgradeUnlock: {fileID: 4847418680274308292}
-  spawnpointAIGatherer: {fileID: 6615298098438963815}
 --- !u!65 &3774046093625316696
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4722,6 +4721,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 8
       objectReference: {fileID: 0}
+    - target: {fileID: 2398689776740344315, guid: 3fea06bfabfa8f44091f28bffde56143, type: 3}
+      propertyPath: upgradeButton
+      value: 
+      objectReference: {fileID: 6909541033620119233}
     - target: {fileID: 2486185075088721674, guid: 3fea06bfabfa8f44091f28bffde56143, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -4748,7 +4751,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2762083510383618748, guid: 3fea06bfabfa8f44091f28bffde56143, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3170390066727378092, guid: 3fea06bfabfa8f44091f28bffde56143, type: 3}
       propertyPath: m_Layer
@@ -4842,6 +4845,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7922792243101039154, guid: 3fea06bfabfa8f44091f28bffde56143, type: 3}
+      propertyPath: assignedPlanter
+      value: 
+      objectReference: {fileID: 405796958164855727}
+    - target: {fileID: 7922792243101039154, guid: 3fea06bfabfa8f44091f28bffde56143, type: 3}
+      propertyPath: materialToGather
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7998451110136092478, guid: 3fea06bfabfa8f44091f28bffde56143, type: 3}
       propertyPath: m_Layer
       value: 8
@@ -4884,11 +4895,6 @@ Transform:
 --- !u!1 &4847418680274308292 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 2762083510383618748, guid: 3fea06bfabfa8f44091f28bffde56143, type: 3}
-  m_PrefabInstance: {fileID: 7282771169310598776}
-  m_PrefabAsset: {fileID: 0}
---- !u!4 &6615298098438963815 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4530580924784665631, guid: 3fea06bfabfa8f44091f28bffde56143, type: 3}
   m_PrefabInstance: {fileID: 7282771169310598776}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7510901693408086927
