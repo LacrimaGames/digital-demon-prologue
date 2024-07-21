@@ -9,30 +9,43 @@ namespace DD.Core.AI
 {
     public class AIGatherer : MonoBehaviour
     {
+        [Header("Global AI Modifers")]
+        private int maxAmountHeld; // Maximum amount of resources the gatherer can carry
+        private float gatheringSpeedPerSecond; // Time taken to gather one resource
+        private int unloadAmountPerSecond; // Amount of materials unloaded per action
+        private float unloadSpeedPerSecond; // Speed of unloading materials (units per second)
+
+
+        [Header("Local AI Modifers")]
+
         public ResourceMaterial.Material materialToGather;
         public float gatherRange = 2f; // Range within which the gatherer can gather resources
-        public int maxAmountHeld = 10; // Maximum amount of resources the gatherer can carry
-        public float gatherTime = 2f; // Time taken to gather one resource
         public float droppOffRange = 1f;
-        public int unloadAmount = 1; // Amount of materials unloaded per action
-        public float unloadSpeed = 1; // Speed of unloading materials (units per second)
-
-        private float unloadTimer;
-
-        public List<GameObject> availableTrees; // List of available trees from the Planter
+        private float unloadTimer = 0f; // Timer for unloading resources
+        public float gatherTimer = 0f; // Timer for gathering resources
         public int amountHeld = 0; // Amount of resources currently carried
+
+
+        [Header("AI Functions")]
+        public List<GameObject> availableTrees; // List of available trees from the Planter
         public GameObject currentTree; // The current tree being gathered
         public Storage nearbyStorage; // The nearby storage to deposit resources
         public Planter assignedPlanter; // Reference to the assigned Planter
-        public float gatherTimer = 0f; // Timer for gathering resources
-
         public Transform spawnPoint;
-
-        NavMeshAgent navMeshAgent;
+        private NavMeshAgent navMeshAgent;
 
         void Start()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
+
+            if (GlobalModifiers.instance != null)
+            {
+                GlobalModifiers.FriendlyAIModifiers friendlyAIModifiers = GlobalModifiers.instance.LoadFriendlyAIModifiers();
+                gatheringSpeedPerSecond = friendlyAIModifiers.gatheringSpeedPerSecond;
+                maxAmountHeld = friendlyAIModifiers.maxAmountHeld;
+                unloadSpeedPerSecond = friendlyAIModifiers.unloadSpeedPerSecond;
+                unloadAmountPerSecond = friendlyAIModifiers.unloadAmount;
+            }
         }
 
         void Update()
@@ -105,7 +118,7 @@ namespace DD.Core.AI
                             if (resource != null && amountHeld + 1 <= maxAmountHeld)
                             {
                                 resource.Gather();
-                                gatherTimer = gatherTime;
+                                gatherTimer = gatheringSpeedPerSecond;
                                 amountHeld++;
                                 //break; // Only gather one resource at a time
                             }
@@ -143,14 +156,14 @@ namespace DD.Core.AI
             {
                 if(nearbyStorage == null) break;
                 MoveTowards(nearbyStorage.transform.position);
-                int amountToStore = Mathf.Min(amountHeld, unloadAmount);
+                int amountToStore = Mathf.Min(amountHeld, unloadAmountPerSecond);
 
                 // If carrying resources and there's a nearby storage, start unloading
                 if (unloadTimer <= 0f && nearbyStorage != null)
                 {
                     nearbyStorage.Unload(amountToStore);
                     amountHeld -= amountToStore;
-                    unloadTimer = unloadSpeed; // Reset the unload timer based on unload speed
+                    unloadTimer = unloadSpeedPerSecond; // Reset the unload timer based on unload speed
                 }
                 yield return navMeshAgent.isStopped = false;
             }

@@ -1,3 +1,5 @@
+using System.Collections;
+using DD.Core;
 using UnityEngine;
 
 namespace DD.Bilder
@@ -6,6 +8,11 @@ namespace DD.Bilder
     {
         public GameObject upgradePrefab; // The new upgraded prefab
         public GameObject upgradeButton; 
+        public int cost;
+
+        [Header("UI")]
+        public TextMesh tooltipTextMesh; // Reference to the TextMesh component for displaying resources
+        private Coroutine tooltip;
 
         private void Start() {
             if(upgradePrefab == null)
@@ -23,14 +30,33 @@ namespace DD.Bilder
         public void ReplacePrefab()
         {
             if(GetComponent<Upgrader>().isActiveAndEnabled == false) return;
-            Vector3 position = transform.position;
-            Quaternion rotation = transform.rotation;
+            if(ResourceTracker.Instance.SpendGold(cost))
+            {
+                Vector3 position = transform.position;
+                Quaternion rotation = transform.rotation;
 
-            Instantiate(upgradePrefab, position, rotation);
+                Instantiate(upgradePrefab, position, rotation);
 
-            Debug.Log("Upgrade complete.");
+                Debug.Log("Upgrade complete.");
 
-            Destroy(gameObject);
+                Destroy(gameObject);
+            }
+            else
+            {
+                tooltip = StartCoroutine(ShowToolTip());
+            }
+        }
+
+        private IEnumerator ShowToolTip()
+        {
+            tooltipTextMesh.gameObject.SetActive(true);
+            // Update the tooltip text with the current resources in the storage
+            tooltipTextMesh.text = $"Upgrade costs {cost} Gold";
+            //     // Make the tooltip face the camera
+            tooltipTextMesh.transform.rotation = Camera.main.transform.rotation;
+            yield return new WaitForSeconds(2);
+            tooltipTextMesh.gameObject.SetActive(false);
+            tooltip = null;
         }
     }
 }

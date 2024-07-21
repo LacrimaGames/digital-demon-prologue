@@ -12,8 +12,6 @@ namespace DD.Core
         [Range(1,3)]
         public int difficulty; // Placeholder, for now it's how many enemies per wave
 
-        public GameObject[] availableBuildings;
-
         private void Awake()
         {
             // Ensure there is only one instance of LevelLoader
@@ -43,13 +41,6 @@ namespace DD.Core
         {
             // Replace with actual loading logic
             return difficulty; // Default value
-        }
-
-        // Example method to load available buildings from a database or configuration
-        public GameObject[] LoadAvailableBuildings()
-        {
-            // Replace with actual loading logic
-            return new GameObject[] { /* List of available buildings */ };
         }
     }
 

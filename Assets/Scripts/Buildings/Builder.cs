@@ -5,28 +5,32 @@ namespace DD.Builder
 {
     public class Builder : MonoBehaviour
     {
+
+        [Header("Storage")]
         public Storage woodStorage; // The storage object that holds wood
         public int woodNeeded; // The amount of wood needed for the house
+        private int woodGathered = 0;
 
         public bool needsStone; // Toggle option for requiring stone
+
         public Storage stoneStorage; // The storage object that holds stone (if needed)
         public int stoneNeeded; // The amount of stone needed for the house
+        private int stoneGathered = 0;
+
+        [Header("Building & Function")]
 
         public GameObject floor; // The floor GameObject
         public GameObject walls; // The walls GameObject
         public GameObject roof; // The roof GameObject
         public GameObject constructionFence; // The fence GameObject
 
+        public GameObject resourceUnlock; // The resource GameObject
+        private bool unlocksFunction = false;
 
-        public GameObject resource; // The resource GameObject
+        [Header("Upgrades")]
         public GameObject upgradeButton;
 
-
-        public bool unlocksFunction = false;
-
-        private int woodGathered = 0;
-        private int stoneGathered = 0;
-
+        [Header("Preview")]
         public GameObject previewPrefab;
 
         private void Awake() // If object has other scripts, disable them until the building is finished
@@ -124,9 +128,9 @@ namespace DD.Builder
 
         void UnlockResource()
         {
-            if (resource != null)
+            if (resourceUnlock != null)
             {
-                resource.SetActive(true);
+                resourceUnlock.SetActive(true);
             }
         }
 
@@ -148,6 +152,7 @@ namespace DD.Builder
                 upgradeButton.SetActive(true);
             }
         }
+        
 
         void CleanUp()
         {

@@ -1,4 +1,5 @@
 using DD.Builder.Buildings;
+using DD.Core;
 using DD.Core.Player;
 using DD.Environment;
 using UnityEngine;
@@ -7,19 +8,19 @@ namespace DD.Jobs
 {
     public class PlayerGatherer : MonoBehaviour
     {
+
+        [Header("Global Player Modifers")]
+        private float gatheringSpeedPerSecond; // Time between each gathering action
+        private float unloadSpeedPerSecond; // Speed of unloading materials (units per second)
+        private int unloadAmountPerSecond; // Amount of materials unloaded per action
+        private int maxAmountHeld;
+
+        [Header("Local Player Modifers")]
+        public int amountHeld = 0;
         public float detectionRadius = 3f; // The radius within which the player can detect and gather materials
-        public float gatheringSpeed = 1f; // Time between each gathering action
-
-        public float unloadSpeed = 1; // Speed of unloading materials (units per second)
-        public int unloadAmount = 1; // Amount of materials unloaded per action
         public float unloadRadius = 2f; // The radius within which the character can unload materials
-
         public float sellSpeed = 1; // Speed of unloading materials (units per second)
         public int sellAmount = 1;
-
-        public int amountHeld = 0; 
-        public int maxAmountHeld = 10;
-
         public ResourceMaterial.Material typeOfMaterialHeld = ResourceMaterial.Material.None;
 
         private float gatherTimer;
@@ -28,10 +29,17 @@ namespace DD.Jobs
 
         private PlayerController playerController;
 
-
         private void Start()
         {
             playerController = GetComponent<PlayerController>();
+            if (GlobalModifiers.instance != null)
+            {
+                GlobalModifiers.PlayerModifiers playerModifiers = GlobalModifiers.instance.LoadPlayerModifiers();
+                gatheringSpeedPerSecond = playerModifiers.gatheringSpeedPerSecond;
+                maxAmountHeld = playerModifiers.maxAmountHeld;
+                unloadSpeedPerSecond = playerModifiers.unloadSpeedPerSecond;
+                unloadAmountPerSecond = playerModifiers.unloadAmount; 
+            }
         }
 
         void Update()
@@ -47,7 +55,7 @@ namespace DD.Jobs
 
         private void Sell()
         {
-            if(sellTimer <= 0f)
+            if (sellTimer <= 0f)
             {
                 Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius);
                 foreach (var hitCollider in hitColliders)
@@ -81,7 +89,7 @@ namespace DD.Jobs
                 foreach (var hitCollider in hitColliders)
                 {
                     Storage storage = hitCollider.GetComponent<Storage>();
-                    int amountToStore = Mathf.Min(amountHeld, unloadAmount);
+                    int amountToStore = Mathf.Min(amountHeld, unloadAmountPerSecond);
 
                     if (storage != null && CanUnload(storage, amountToStore))
                     {
@@ -93,7 +101,7 @@ namespace DD.Jobs
                             typeOfMaterialHeld = ResourceMaterial.Material.None;
                         }
 
-                        unloadTimer = unloadSpeed; // Reset the unload timer based on unload speed
+                        unloadTimer = unloadSpeedPerSecond; // Reset the unload timer based on unload speed
                         break; // Only unload to one storage at a time
                     }
                 }
@@ -111,7 +119,7 @@ namespace DD.Jobs
                     if (resource != null && CanGather(resource.resourceMaterial))
                     {
                         resource.Gather();
-                        gatherTimer = gatheringSpeed;
+                        gatherTimer = gatheringSpeedPerSecond;
                         amountHeld++;
                         typeOfMaterialHeld = resource.resourceMaterial;
                         //break; // Only gather one resource at a time

@@ -378,6 +378,7 @@ Transform:
   - {fileID: 6850616163071910217}
   - {fileID: 3483843775184153479}
   - {fileID: 8168731201933601643}
+  - {fileID: 6334319167870812972}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &648996594407133004
@@ -401,9 +402,8 @@ MonoBehaviour:
   walls: {fileID: 1908954384456109475}
   roof: {fileID: 5786133020344436070}
   constructionFence: {fileID: 4121300038469901082}
-  resource: {fileID: 8712331929392979741}
+  resourceUnlock: {fileID: 0}
   upgradeButton: {fileID: 0}
-  unlocksFunction: 0
   previewPrefab: {fileID: 1376308887518107195, guid: 8c305d34f275a1c43a5cfa59bfa7c6db, type: 3}
 --- !u!54 &6535186456939083059
 Rigidbody:
@@ -471,6 +471,8 @@ MonoBehaviour:
   - {fileID: 9131531617546606378}
   checkInterval: 10
   upgradeUnlock: {fileID: 8841442693844386981}
+  cost: 5
+  tooltipTextMesh: {fileID: 4250293613888196053}
 --- !u!1 &1908954384456109475
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,6 +541,103 @@ Transform:
   - {fileID: 7950519626328216737}
   m_Father: {fileID: 7570122985955864694}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &4916910668979150822
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6334319167870812972}
+  - component: {fileID: 5870890969182639709}
+  - component: {fileID: 4250293613888196053}
+  m_Layer: 0
+  m_Name: Tooltip
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &6334319167870812972
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4916910668979150822}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -14.252169, y: 8, z: -12.298573}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 7570122985955864694}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!23 &5870890969182639709
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4916910668979150822}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10100, guid: 0000000000000000e000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!102 &4250293613888196053
+TextMesh:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4916910668979150822}
+  m_Text: Hi
+  m_OffsetZ: 0
+  m_CharacterSize: 1
+  m_LineSpacing: 1
+  m_Anchor: 0
+  m_Alignment: 0
+  m_TabSize: 4
+  m_FontSize: 0
+  m_FontStyle: 0
+  m_RichText: 1
+  m_Font: {fileID: 0}
+  m_Color:
+    serializedVersion: 2
+    rgba: 4294967295
 --- !u!1 &5786133020344436070
 GameObject:
   m_ObjectHideFlags: 0
@@ -1856,7 +1955,7 @@ PrefabInstance:
     - target: {fileID: 2398689776740344315, guid: 3fea06bfabfa8f44091f28bffde56143, type: 3}
       propertyPath: upgradeButton
       value: 
-      objectReference: {fileID: 1140881230226752289}
+      objectReference: {fileID: 1366974919738225709}
     - target: {fileID: 2486185075088721674, guid: 3fea06bfabfa8f44091f28bffde56143, type: 3}
       propertyPath: m_Layer
       value: 8

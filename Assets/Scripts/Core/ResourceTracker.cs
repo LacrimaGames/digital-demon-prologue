@@ -56,7 +56,7 @@ namespace DD.Core{
             {
                 currentMaterialHeld = FindAnyObjectByType<PlayerGatherer>().typeOfMaterialHeld;
                 amountOfMaterialHeld = FindAnyObjectByType<PlayerGatherer>().amountHeld;
-                maxAmountOfMaterialHeld = FindAnyObjectByType<PlayerGatherer>().maxAmountHeld;
+                maxAmountOfMaterialHeld = GlobalModifiers.instance.playerModifiers.maxAmountHeld;
             }
 
             goldText.text = amountOfGold.ToString();

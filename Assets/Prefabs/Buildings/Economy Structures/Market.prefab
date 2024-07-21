@@ -219,9 +219,8 @@ MonoBehaviour:
   walls: {fileID: 4351456889460273756}
   roof: {fileID: 1285816978147769980}
   constructionFence: {fileID: 2178290905321373640}
-  resource: {fileID: 3751355481269021217}
+  resourceUnlock: {fileID: 3751355481269021217}
   upgradeButton: {fileID: 0}
-  unlocksFunction: 0
   previewPrefab: {fileID: 3691456567899636705, guid: 655938d36f421fa44886bca3d35e01c4, type: 3}
 --- !u!208 &6588595684437897953
 NavMeshObstacle:
