@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using DD.Core;
 using UnityEngine;
@@ -15,11 +14,37 @@ namespace DD.Combat
             FriendlyAI,
             Tower,
             Wall,
+            MissionObjective
             // Add more material types as needed
         }
 
         public Combatants combatants;
         public int health = 100;
+
+        private void Start()
+        {
+            if (combatants == Combatants.None)
+            {
+                switch (gameObject.tag)
+                {
+                    case "Player":
+                        combatants = Combatants.Player;
+                        break;
+                    case "EnemyAI":
+                        combatants = Combatants.EnemyAI;
+                        break;
+                    case "FriendlyAI":
+                        combatants = Combatants.FriendlyAI;
+                        break;
+                    case "Tower":
+                        combatants = Combatants.Tower;
+                        break;
+                    case "MissionObjective":
+                        combatants = Combatants.MissionObjective;
+                        break;
+                }
+            }
+        }
 
         public void TakeDamage(int damage)
         {
@@ -40,6 +65,10 @@ namespace DD.Combat
             {
                 CountEnemyDeath();
             }
+            else if (combatants == Combatants.MissionObjective)
+            {
+                CountObjectiveDestroyed();
+            }
         }
 
         private IEnumerator RespawnPlayer()
@@ -48,7 +77,7 @@ namespace DD.Combat
             yield return new WaitForSeconds(5f);
             ComponentControl(true);
         }
-    
+
         private void ComponentControl(bool state)
         {
             GetComponent<Collider>().enabled = state;
@@ -58,7 +87,7 @@ namespace DD.Combat
                 item.enabled = state;
             }
 
-            if(state == true)
+            if (state == true)
             {
                 health = 100;
             }
@@ -69,6 +98,13 @@ namespace DD.Combat
             EnemySpawner.Instance.KillEnemy(gameObject);
             Destroy(gameObject);
         }
+
+        public void CountObjectiveDestroyed()
+        {
+            MissionProgressHandler.instance.MissionObjectiveDestroyed(gameObject);
+            Destroy(gameObject);
+        }
+
 
         public bool IsPlayerDead()
         {

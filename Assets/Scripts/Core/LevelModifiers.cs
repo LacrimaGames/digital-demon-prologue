@@ -12,6 +12,8 @@ namespace DD.Core
         [Range(1,3)]
         public int difficulty; // Placeholder, for now it's how many enemies per wave
 
+        public GameObject core;
+
         private void Awake()
         {
             // Ensure there is only one instance of LevelLoader
@@ -24,6 +26,14 @@ namespace DD.Core
                 Debug.LogWarning("Multiple instances of LevelLoader found. Destroying this instance.");
                 Destroy(gameObject);
             }
+
+            Instantiate(core);
+
+
+        }
+
+        private void Start() {
+
         }
 
         // Example method to load number of enemies to spawn from a save file or configuration

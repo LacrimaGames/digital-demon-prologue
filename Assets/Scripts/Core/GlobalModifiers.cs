@@ -12,7 +12,8 @@ namespace DD.Core
             public float gatheringSpeedPerSecond = 1f; // Time between each gathering action
             public int maxAmountHeld = 20;
             public float unloadSpeedPerSecond = 1; // Speed of unloading materials (units per second)
-            public int unloadAmount = 1; // Amount of materials unloaded per action
+            public int attackDamage = 10;
+            public float movementSpeed = 5f;
         }
 
         [System.Serializable]
@@ -22,6 +23,7 @@ namespace DD.Core
             public int maxAmountHeld = 20;
             public float unloadSpeedPerSecond = 1; // Speed of unloading materials (units per second)
             public int unloadAmount = 1; // Amount of materials unloaded per action
+            public float movementSpeed = 5f;
         }
 
         [System.Serializable]
@@ -72,8 +74,9 @@ namespace DD.Core
             }
         }
 
-        private void Update() {
-            if(Input.GetKeyDown(KeyCode.Space))
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
             {
                 playerModifiers.maxAmountHeld += 10;
             }

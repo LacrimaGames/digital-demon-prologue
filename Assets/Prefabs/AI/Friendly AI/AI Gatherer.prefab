@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 3894169009525379693}
   m_Layer: 3
   m_Name: AI Gatherer
-  m_TagString: Untagged
+  m_TagString: FriendlyAI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -178,19 +178,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2eaa92c84a495d42a1c551c84e6e1a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  materialToGather: 0
   gatherRange: 4
-  maxAmountHeld: 10
-  gatherTime: 0.5
   droppOffRange: 2
-  unloadAmount: 1
-  unloadSpeed: 1
-  availableTrees: []
-  amountHeld: 0
-  currentTree: {fileID: 0}
-  nearbyStorage: {fileID: 0}
-  assignedPlanter: {fileID: 0}
   gatherTimer: 0
-  spawnPoint: {fileID: 0}
+  amountHeld: 0
 --- !u!114 &6516663563177158549
 MonoBehaviour:
   m_ObjectHideFlags: 0

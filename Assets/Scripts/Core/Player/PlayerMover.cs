@@ -4,10 +4,26 @@ namespace DD.Core.Player
 {
     public class PlayerMover : MonoBehaviour
     {
-        public float speed = 5f; // Speed of the player
-        public float rotationSpeed = 700f; // Speed of rotation
-        public Camera mainCamera; // Reference to the main camera
+        [Header("Global Modifiers")]
+        public float movementSpeed = 5f; // Speed of the player
 
+        [Header("Local Modifiers")]
+        public float rotationSpeed = 700f; // Speed of rotation
+
+        private Camera mainCamera; // Reference to the main camera
+
+        private void Start()
+        {
+            if(mainCamera == null)
+            {
+                mainCamera = Camera.main;
+            }
+            if (GlobalModifiers.instance != null)
+            {
+                GlobalModifiers.PlayerModifiers playerModifiers = GlobalModifiers.instance.LoadPlayerModifiers();
+                movementSpeed = playerModifiers.movementSpeed;
+            }
+        }
         void Update()
         {
             Move();
@@ -39,7 +55,7 @@ namespace DD.Core.Player
                 transform.rotation = Quaternion.Euler(0, angle, 0);
 
                 // Move the player in the direction of the camera's forward axis
-                transform.Translate(moveDirection * speed * Time.deltaTime, Space.World);
+                transform.Translate(moveDirection * movementSpeed * Time.deltaTime, Space.World);
             }
         }
     }

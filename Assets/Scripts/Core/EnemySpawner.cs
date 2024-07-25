@@ -28,12 +28,13 @@ namespace DD.Core
 
         public static EnemySpawner Instance { get; private set; }
 
+        public bool gameStarted = false;
+
         private void Awake()
         {
             if (Instance == null)
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
             }
             else
             {
@@ -51,11 +52,19 @@ namespace DD.Core
             enemiesPerWave = LevelModifier.instance.LoadDifficulty();
             delayBeforeMissionStart = LevelModifier.instance.LoadDelayBeforeMissionStart();
             spawnInterval /= LevelModifier.instance.LoadDifficulty();
-            StartCoroutine(CountdownToStart());
-
+            StartGame();
         }
 
-        private IEnumerator CountdownToStart()
+        public void StartGame()
+        {
+            if(!gameStarted)
+            {
+                gameStarted = true;
+                StartCoroutine(CountdownToStart());
+            }
+        }
+
+        public IEnumerator CountdownToStart()
         {
             countdownTime = delayBeforeMissionStart;
 
@@ -87,11 +96,7 @@ namespace DD.Core
 
         private void SpawnEnemy()
         {
-            if (currentKillCount >= maxEnemiesThisMission)
-            {
-                Debug.Log("You won");
-                Destroy(gameObject);
-            }
+
             if (currentSpawnCount >= maxEnemiesThisMission)
             {
                 Debug.Log("Max enemies have been spawned");
@@ -108,6 +113,16 @@ namespace DD.Core
         {
             enemySpawned.Remove(enemy);
             currentKillCount++;
+        }
+        
+        public int GetCurrentKillCount()
+        {
+            return currentKillCount;
+        }
+
+        public int GetMaxEnemiesThisMission()
+        {
+            return maxEnemiesThisMission;
         }
     }
 }

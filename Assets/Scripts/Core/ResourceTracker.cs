@@ -23,7 +23,6 @@ namespace DD.Core{
             if (Instance == null)
             {
                 Instance = this;
-                DontDestroyOnLoad(gameObject);
             }
             else
             {
@@ -56,7 +55,7 @@ namespace DD.Core{
             {
                 currentMaterialHeld = FindAnyObjectByType<PlayerGatherer>().typeOfMaterialHeld;
                 amountOfMaterialHeld = FindAnyObjectByType<PlayerGatherer>().amountHeld;
-                maxAmountOfMaterialHeld = GlobalModifiers.instance.playerModifiers.maxAmountHeld;
+                maxAmountOfMaterialHeld = GlobalModifiers.instance.LoadPlayerModifiers().maxAmountHeld;
             }
 
             goldText.text = amountOfGold.ToString();

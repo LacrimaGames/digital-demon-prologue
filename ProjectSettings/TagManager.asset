@@ -11,6 +11,10 @@ TagManager:
   - Tower
   - Structure
   - Preview
+  - Back To Menu
+  - MissionObjective
+  - EnemyAI
+  - FriendlyAI
   layers:
   - Default
   - TransparentFX

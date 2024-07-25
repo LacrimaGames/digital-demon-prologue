@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 89962979412386996}
   m_Layer: 3
   m_Name: Enemy 2
-  m_TagString: Untagged
+  m_TagString: EnemyAI
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -266,7 +266,7 @@ MonoBehaviour:
   damage: 10
   bulletPrefab: {fileID: 6582589674814875814, guid: 9086390e404b6854d9b601b6bca16c83, type: 3}
   firePoint: {fileID: 7862061874688946293}
-  targets: 010000000400000003000000
+  targets: 01000000040000000300000006000000
   goalDestination: {fileID: 0}
   target: {fileID: 0}
 --- !u!195 &6782818149406117750

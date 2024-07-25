@@ -5,28 +5,37 @@ using UnityEngine;
 
 namespace DD.Core.Player
 {
+    [RequireComponent(typeof(PlayerController))]
+    [RequireComponent(typeof(Health))]
     public class PlayerFighter : MonoBehaviour
     {
-        public float detectionRadius = 10f; // Detection radius for enemies
+
+        [Header("Game Modifiers")]
         public float fireRate = 1f; // Rate of firing bullets
         public int damage = 10; // Damage dealt per shot
+        public float detectionRadius = 10f; // Detection radius for enemies
+
+        [Header("Prefabs & Objects")]
         public GameObject bulletPrefab; // Prefab of the bullet to be shot
         public Transform firePoint; // The point from which the bullet will be shot
 
         public List<Health.Combatants> targets;
-
         private PlayerController playerController;
-
         private float fireCooldown = 0f;
 
         private void Start()
         {
             playerController = GetComponent<PlayerController>();
+            if (GlobalModifiers.instance != null)
+            {
+                GlobalModifiers.PlayerModifiers playerModifiers = GlobalModifiers.instance.LoadPlayerModifiers();
+                damage = playerModifiers.attackDamage;
+            }
         }
 
         void Update()
         {
-            if(!playerController.hasWeaponEquipped) return;
+            if (!playerController.hasWeaponEquipped) return;
 
             fireCooldown -= Time.deltaTime;
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius);
@@ -47,7 +56,7 @@ namespace DD.Core.Player
         {
             foreach (Health.Combatants target in targets)
             {
-                if(attemptedTarget.combatants == target)
+                if (attemptedTarget.combatants == target)
                 {
                     return true;
                 }

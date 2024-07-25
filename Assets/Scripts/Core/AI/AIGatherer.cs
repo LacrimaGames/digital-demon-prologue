@@ -7,6 +7,8 @@ using UnityEngine.AI;
 
 namespace DD.Core.AI
 {
+
+    [RequireComponent(typeof(NavMeshAgent))]
     public class AIGatherer : MonoBehaviour
     {
         [Header("Global AI Modifers")]
@@ -15,9 +17,7 @@ namespace DD.Core.AI
         private int unloadAmountPerSecond; // Amount of materials unloaded per action
         private float unloadSpeedPerSecond; // Speed of unloading materials (units per second)
 
-
         [Header("Local AI Modifers")]
-
         public ResourceMaterial.Material materialToGather;
         public float gatherRange = 2f; // Range within which the gatherer can gather resources
         public float droppOffRange = 1f;
@@ -25,13 +25,12 @@ namespace DD.Core.AI
         public float gatherTimer = 0f; // Timer for gathering resources
         public int amountHeld = 0; // Amount of resources currently carried
 
-
         [Header("AI Functions")]
-        public List<GameObject> availableTrees; // List of available trees from the Planter
-        public GameObject currentTree; // The current tree being gathered
-        public Storage nearbyStorage; // The nearby storage to deposit resources
-        public Planter assignedPlanter; // Reference to the assigned Planter
-        public Transform spawnPoint;
+        private List<GameObject> availableResource; // List of available trees from the Planter
+        private GameObject currentResource; // The current tree being gathered
+        private Storage nearbyStorage; // The nearby storage to deposit resources
+        private Planter assignedPlanter; // Reference to the assigned Planter
+        private Transform spawnPoint;
         private NavMeshAgent navMeshAgent;
 
         void Start()
@@ -45,6 +44,7 @@ namespace DD.Core.AI
                 maxAmountHeld = friendlyAIModifiers.maxAmountHeld;
                 unloadSpeedPerSecond = friendlyAIModifiers.unloadSpeedPerSecond;
                 unloadAmountPerSecond = friendlyAIModifiers.unloadAmount;
+                navMeshAgent.speed = friendlyAIModifiers.movementSpeed;
             }
         }
 
@@ -63,7 +63,7 @@ namespace DD.Core.AI
 
             FindNearestStorage();
 
-            if (nearbyStorage == null) 
+            if (nearbyStorage == null)
             {
                 MoveTowards(spawnPoint.position);
                 return;
@@ -71,7 +71,7 @@ namespace DD.Core.AI
 
             gatherTimer -= Time.deltaTime;
             unloadTimer -= Time.deltaTime;
-            availableTrees = assignedPlanter.GetAvailableTrees();
+            availableResource = assignedPlanter.GetAvailableTrees();
 
 
             if (amountHeld >= maxAmountHeld)
@@ -99,15 +99,15 @@ namespace DD.Core.AI
 
         void GatherResources()
         {
-            if (currentTree == null)
+            if (currentResource == null)
             {
                 // Find the nearest available tree
-                currentTree = FindNearestTree();
+                currentResource = FindNearestTree();
             }
 
-            if (currentTree != null)
+            if (currentResource != null)
             {
-                if (Vector3.Distance(transform.position, currentTree.transform.position) <= gatherRange)
+                if (Vector3.Distance(transform.position, currentResource.transform.position) <= gatherRange)
                 {
                     if (gatherTimer <= 0f)
                     {
@@ -128,7 +128,7 @@ namespace DD.Core.AI
                 }
                 else
                 {
-                    MoveTowards(currentTree.transform.position);
+                    MoveTowards(currentResource.transform.position);
                 }
             }
         }
@@ -154,7 +154,7 @@ namespace DD.Core.AI
         {
             while (amountHeld > 0)
             {
-                if(nearbyStorage == null) break;
+                if (nearbyStorage == null) break;
                 MoveTowards(nearbyStorage.transform.position);
                 int amountToStore = Mathf.Min(amountHeld, unloadAmountPerSecond);
 
@@ -183,7 +183,7 @@ namespace DD.Core.AI
             GameObject nearestTree = null;
             float shortestDistance = Mathf.Infinity;
 
-            foreach (GameObject tree in availableTrees)
+            foreach (GameObject tree in availableResource)
             {
                 if (tree == null) continue;
                 float distance = Vector3.Distance(transform.position, tree.transform.position);
