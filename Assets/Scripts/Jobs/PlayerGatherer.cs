@@ -12,14 +12,14 @@ namespace DD.Jobs
 
         [Header("Global Player Modifers")]
         private float gatheringSpeedPerSecond; // Time between each gathering action
-        private int unloadAmountPerSecond; // Amount of materials unloaded per action
+        private float unloadSpeedPerSecond; // Speed of unloading materials (units per second)
         private int maxAmountHeld;
 
         [Header("Local Player Modifers")]
         public int amountHeld = 0;
         public float detectionRadius = 3f; // The radius within which the player can detect and gather materials
         public float unloadRadius = 2f; // The radius within which the character can unload materials
-        private float unloadSpeedPerSecond = 1f; // Speed of unloading materials (units per second)
+        private int unloadAmountPerSecond = 1; // Amount of materials unloaded per action
         public float sellSpeed = 1; // Speed of unloading materials (units per second)
         public int sellAmount = 1;
         public ResourceMaterial.Material typeOfMaterialHeld = ResourceMaterial.Material.None;

@@ -13,7 +13,9 @@ namespace DD.Core
             public int maxAmountHeld = 20;
             public float unloadSpeedPerSecond = 1; // Speed of unloading materials (units per second)
             public int attackDamage = 10;
+            public float attackSpeed = 10;
             public float movementSpeed = 5f;
+            public int health = 100;
         }
 
         [System.Serializable]
@@ -24,6 +26,7 @@ namespace DD.Core
             public float unloadSpeedPerSecond = 1; // Speed of unloading materials (units per second)
             public int unloadAmount = 1; // Amount of materials unloaded per action
             public float movementSpeed = 5f;
+            public int health = 100;
         }
 
         [System.Serializable]
@@ -32,6 +35,7 @@ namespace DD.Core
             public float detectionRadius = 10f; // Detection radius for enemies
             public float fireRate = 1f; // Rate of firing bullets
             public int damage = 10; // Damage dealt per shot
+            public int health = 100;
         }
 
         [System.Serializable]
@@ -40,6 +44,7 @@ namespace DD.Core
             public float detectionRadius = 20f; // Detection radius for enemies
             public float fireRate = 2f; // Rate of firing bullets
             public int damage = 15; // Damage dealt per shot
+            public int health = 100;
         }
 
         [System.Serializable]
@@ -48,6 +53,37 @@ namespace DD.Core
             public float detectionRadius = 20f; // Detection radius for enemies
             public float fireRate = 3f; // Rate of firing bullets
             public int damage = 25; // Damage dealt per shot
+            public int health = 100;
+        }
+
+        [System.Serializable]
+        public class Tier1EnemyModifiers
+        {
+            public float detectionRadius = 10f; // Detection radius for enemies
+            public float fireRate = 1f; // Rate of firing bullets
+            public int damage = 10; // Damage dealt per shot
+            public float movementSpeed = 5f;
+            public int health = 100;
+        }
+
+        [System.Serializable]
+        public class Tier2EnemyModifiers
+        {
+            public float detectionRadius = 20f; // Detection radius for enemies
+            public float fireRate = 2f; // Rate of firing bullets
+            public int damage = 15; // Damage dealt per shot
+            public float movementSpeed = 5f;
+            public int health = 100;
+        }
+
+        [System.Serializable]
+        public class Tier3EnemyModifiers
+        {
+            public float detectionRadius = 20f; // Detection radius for enemies
+            public float fireRate = 3f; // Rate of firing bullets
+            public int damage = 25; // Damage dealt per shot
+            public float movementSpeed = 5f;
+            public int health = 100;
         }
 
         public PlayerModifiers playerModifiers;
@@ -55,6 +91,9 @@ namespace DD.Core
         public Tier1TowerModifiers tier1TowerModifiers;
         public Tier2TowerModifiers tier2TowerModifiers;
         public Tier3TowerModifiers tier3TowerModifiers;
+        public Tier1EnemyModifiers tier1EnemyModifiers;
+        public Tier2EnemyModifiers tier2EnemyModifiers;
+        public Tier3EnemyModifiers tier3EnemyModifiers;
 
 
         // Variables to hold level data
@@ -110,6 +149,24 @@ namespace DD.Core
         {
             // Replace with actual loading logic
             return tier3TowerModifiers; // Default value
+        }
+
+        public Tier1EnemyModifiers LoadTier1EnemyModifiers()
+        {
+            // Replace with actual loading logic
+            return tier1EnemyModifiers; // Default value
+        }
+
+        public Tier2EnemyModifiers LoadTier2EnemyModifiers()
+        {
+            // Replace with actual loading logic
+            return tier2EnemyModifiers; // Default value
+        }
+
+        public Tier3EnemyModifiers LoadTier3EnemyModifiers()
+        {
+            // Replace with actual loading logic
+            return tier3EnemyModifiers; // Default value
         }
     }
 

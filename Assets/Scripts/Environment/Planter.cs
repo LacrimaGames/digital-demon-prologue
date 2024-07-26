@@ -12,10 +12,7 @@ namespace DD.Environment
         public Transform[] resourcePlots; // Array of transforms representing the tree plots
         public float checkInterval = 5f; // Interval (in seconds) to check for empty plots
         private List<GameObject> availableResources = new List<GameObject>();
-
-        [Header("Upgrade")]
-        public GameObject upgradeUnlock;
-        public int cost;
+        public GameObject aiSpawnPoint;
 
         [Header("UI")]
         public TextMesh tooltipTextMesh; // Reference to the TextMesh component for displaying resources
@@ -64,34 +61,22 @@ namespace DD.Environment
         }
 
 
-        private void OnMouseDown()
-        {
-            if (upgradeUnlock.activeSelf == true) return;
+        // private void OnMouseDown()
+        // {
+        //     if (upgradeUnlock.activeSelf == true) return;
 
-            if (!ResourceTracker.Instance.SpendGold(cost))
-            {
-                if (tooltip == null)
-                {
-                    tooltip = StartCoroutine(ShowToolTip());
-                }
-            }
-            else
-            {
-                upgradeUnlock.SetActive(true);
-            }
-        }
-
-        private IEnumerator ShowToolTip()
-        {
-            tooltipTextMesh.gameObject.SetActive(true);
-            // Update the tooltip text with the current resources in the storage
-            tooltipTextMesh.text = $"Upgrade costs {cost} Gold";
-            //     // Make the tooltip face the camera
-            tooltipTextMesh.transform.rotation = Camera.main.transform.rotation;
-            yield return new WaitForSeconds(2);
-            tooltipTextMesh.gameObject.SetActive(false);
-            tooltip = null;
-        }
+        //     if (!ResourceTracker.Instance.SpendGold(cost))
+        //     {
+        //         if (tooltip == null)
+        //         {
+        //             tooltip = StartCoroutine(ShowToolTip());
+        //         }
+        //     }
+        //     else
+        //     {
+        //         upgradeUnlock.SetActive(true);
+        //     }
+        // }
 
         void OnDrawGizmos()
         {

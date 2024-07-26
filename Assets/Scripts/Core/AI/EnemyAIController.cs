@@ -7,39 +7,77 @@ namespace DD.Core.AI
 {
     public class EnemyAIController : MonoBehaviour
     {
+        [Header("Modifiers")]
         public float detectionRadius = 10f; // Detection radius for enemies
         public float fireRate = 1f; // Rate of firing bullets
         public int damage = 10; // Damage dealt per shot
+        [Range(1, 3)]
+        public int tier;
+
+        [Header("Targets")]
+        public List<Health.Combatants> targets;
+
+        [Header("Prefabs & Objects")]
         public GameObject bulletPrefab; // Prefab of the bullet to be shot
         public Transform firePoint; // The point from which the bullet will be shot
-        public List<Health.Combatants> targets;
-        private float stoppingDistance = 7f;
-
         public Transform goalDestination;
+
         private Vector3 temporaryDestination;
-        NavMeshAgent navMeshAgent;
+        private NavMeshAgent navMeshAgent;
+        private Health target;
+        private Health health;
 
-        public Health target;
+        private float fireCooldown = 0f;
 
-        private void Start()
+        void Start()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
-            if(goalDestination == null)
+            health = GetComponent<Health>();
+
+            if (GlobalModifiers.instance != null)
+            {
+                switch (tier)
+                {
+                    case 1:
+                        GlobalModifiers.Tier1EnemyModifiers tier1Modifiers = GlobalModifiers.instance.LoadTier1EnemyModifiers();
+                        detectionRadius = tier1Modifiers.detectionRadius;
+                        fireRate = tier1Modifiers.fireRate;
+                        damage = tier1Modifiers.damage;
+                        navMeshAgent.speed = tier1Modifiers.movementSpeed;
+                        health.health = tier1Modifiers.health;
+                        break;
+                    case 2:
+                        GlobalModifiers.Tier2EnemyModifiers tier2Modifiers = GlobalModifiers.instance.LoadTier2EnemyModifiers();
+                        detectionRadius = tier2Modifiers.detectionRadius;
+                        fireRate = tier2Modifiers.fireRate;
+                        damage = tier2Modifiers.damage;
+                        navMeshAgent.speed = tier2Modifiers.movementSpeed;
+                        health.health = tier2Modifiers.health;
+                        break;
+                    case 3:
+                        GlobalModifiers.Tier3EnemyModifiers tier3Modifiers = GlobalModifiers.instance.LoadTier3EnemyModifiers();
+                        detectionRadius = tier3Modifiers.detectionRadius;
+                        fireRate = tier3Modifiers.fireRate;
+                        damage = tier3Modifiers.damage;
+                        navMeshAgent.speed = tier3Modifiers.movementSpeed;
+                        health.health = tier3Modifiers.health;
+                        break;
+                }
+            }
+
+            if (goalDestination == null)
             {
                 goalDestination = EnemySpawner.Instance.endGoal;
             }
         }
 
-        private float fireCooldown = 0f;
-
         void Update()
         {
             DetectTargets();
-            Fight();
             MoveTowardsDestination();
         }
 
-        void DetectTargets()
+        private void DetectTargets()
         {
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius);
 
@@ -53,44 +91,38 @@ namespace DD.Core.AI
                     {
                         temporaryDestination = enemy.transform.position;
                         target = enemy;
+                        Fight();
+                    }
+                    else
+                    {
+                        temporaryDestination = Vector3.zero;
                     }
                 }
-
                 else
                 {
-                    temporaryDestination = Vector3.zero;
                     target = null;
                 }
-
             }
         }
 
-        void MoveTowardsDestination()
+        private void MoveTowardsDestination()
         {
             if (temporaryDestination == Vector3.zero)
             {
                 // Rotate to face the current destination
                 Vector3 direction = (goalDestination.position - transform.position).normalized;
-                transform.rotation = Quaternion.LookRotation(direction);
-
-                // Move towards the destination
-                if (Vector3.Distance(transform.position, goalDestination.position) > stoppingDistance)
-                {
-                    navMeshAgent.SetDestination(goalDestination.position);
-                }
+                transform.rotation = Quaternion.LookRotation(transform.forward);
+                navMeshAgent.SetDestination(goalDestination.position);
             }
             else
             {
                 // Rotate to face the current destination
                 Vector3 direction = (temporaryDestination - transform.position).normalized;
-                transform.rotation = Quaternion.LookRotation(direction);
+                transform.rotation = Quaternion.LookRotation(transform.forward);
 
                 // Move towards the destination
-                if (Vector3.Distance(transform.position, temporaryDestination) > stoppingDistance)
-                {
-                    navMeshAgent.SetDestination(temporaryDestination);
 
-                }
+                navMeshAgent.SetDestination(temporaryDestination);
             }
 
         }

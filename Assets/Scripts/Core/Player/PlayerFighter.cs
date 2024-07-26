@@ -11,7 +11,7 @@ namespace DD.Core.Player
     {
 
         [Header("Game Modifiers")]
-        public float fireRate = 1f; // Rate of firing bullets
+        public float attackSpeed = 1f; // Rate of firing bullets
         public int damage = 10; // Damage dealt per shot
         public float detectionRadius = 10f; // Detection radius for enemies
 
@@ -22,14 +22,18 @@ namespace DD.Core.Player
         public List<Health.Combatants> targets;
         private PlayerController playerController;
         private float fireCooldown = 0f;
+        private Health health;
 
         private void Start()
         {
             playerController = GetComponent<PlayerController>();
+            health = GetComponent<Health>();
             if (GlobalModifiers.instance != null)
             {
                 GlobalModifiers.PlayerModifiers playerModifiers = GlobalModifiers.instance.LoadPlayerModifiers();
                 damage = playerModifiers.attackDamage;
+                attackSpeed = playerModifiers.attackSpeed;
+                health.health = playerModifiers.health;
             }
         }
 
@@ -46,7 +50,7 @@ namespace DD.Core.Player
                 if (enemy != null && IsEnemyTarget(enemy) && fireCooldown <= 0f)
                 {
                     Shoot(enemy);
-                    fireCooldown = 1f / fireRate;
+                    fireCooldown = 1f / attackSpeed;
                     break;
                 }
             }

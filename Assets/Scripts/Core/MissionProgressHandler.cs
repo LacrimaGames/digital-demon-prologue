@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DD.Core
@@ -7,6 +8,7 @@ namespace DD.Core
     {
         private GameObject backToMenuScreen;
         private List<GameObject> missionObjectives = new List<GameObject>();
+        private bool objectiveIsBuilt = false;
 
         public static MissionProgressHandler instance;
 
@@ -41,7 +43,7 @@ namespace DD.Core
         }
         private void Update()
         {
-            if (EnemySpawner.Instance.GetCurrentKillCount() >= EnemySpawner.Instance.GetMaxEnemiesThisMission())
+            if (EnemySpawner.Instance.GetCurrentKillCount() >= EnemySpawner.Instance.GetMaxEnemiesThisMission() && objectiveIsBuilt)
             {
                 Debug.Log("You won");
                 Destroy(EnemySpawner.Instance);
@@ -64,6 +66,11 @@ namespace DD.Core
         public void GoBackToMenu()
         {
             LevelLoader.Instance.LoadScene(0);
+        }
+
+        public void FinishObjective()
+        {
+            objectiveIsBuilt = true;
         }
     }
 }

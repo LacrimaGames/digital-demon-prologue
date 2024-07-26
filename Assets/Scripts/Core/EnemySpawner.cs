@@ -7,9 +7,17 @@ namespace DD.Core
 {
     public class EnemySpawner : MonoBehaviour
     {
-        public GameObject enemyPrefab;
+
+        public GameObject tier1EnemyPrefab;
+        public GameObject tier2EnemyPrefab;
+        public GameObject tier3EnemyPrefab;
+
         public Transform[] spawnPoints; // An array of spawn points
         public Transform endGoal;
+
+        private int amountOfTier1Enemies;
+        private int amountOfTier2Enemies;
+        private int amountOfTier3Enemies;
 
         private int enemiesPerWave; // Number of enemies to spawn per wave / Difficulty
         public float spawnDelay = 1f; // Delay between spawning each enemy within a wave
@@ -22,6 +30,12 @@ namespace DD.Core
         private int currentKillCount = 0;
         private float currentSpawnCount = 0;
 
+
+        public float currentSpawnCountTier1 = 0;
+        public float currentSpawnCountTier2 = 0;
+        public float currentSpawnCountTier3 = 0;
+
+
         private TMP_Text textTimeUntilSpawn;
 
         private List<GameObject> enemySpawned = new List<GameObject>();
@@ -29,6 +43,11 @@ namespace DD.Core
         public static EnemySpawner Instance { get; private set; }
 
         public bool gameStarted = false;
+
+        public TextMesh tooltipTextMesh; // Reference to the TextMesh component for displaying resources
+
+        private float countdownTilNextSpawn;
+
 
         private void Awake()
         {
@@ -44,7 +63,7 @@ namespace DD.Core
 
         private void Start()
         {
-            if(textTimeUntilSpawn == null)  
+            if (textTimeUntilSpawn == null)
             {
                 textTimeUntilSpawn = GameObject.FindGameObjectWithTag("Countdown").GetComponent<TMP_Text>();
             }
@@ -52,14 +71,19 @@ namespace DD.Core
             enemiesPerWave = LevelModifier.instance.LoadDifficulty();
             delayBeforeMissionStart = LevelModifier.instance.LoadDelayBeforeMissionStart();
             spawnInterval /= LevelModifier.instance.LoadDifficulty();
+            amountOfTier1Enemies = LevelModifier.instance.amountOfTier1Enemies;
+            amountOfTier2Enemies = LevelModifier.instance.amountOfTier2Enemies;
+            amountOfTier3Enemies = LevelModifier.instance.amountOfTier3Enemies;
+            tooltipTextMesh.gameObject.SetActive(false);
+            countdownTilNextSpawn = spawnInterval + delayBeforeMissionStart;
+
             StartGame();
         }
 
         public void StartGame()
         {
-            if(!gameStarted)
+            if (!gameStarted)
             {
-                gameStarted = true;
                 StartCoroutine(CountdownToStart());
             }
         }
@@ -78,6 +102,7 @@ namespace DD.Core
                 textTimeUntilSpawn.text = countdownTime.ToString();
             }
 
+            gameStarted = true;
             StartCoroutine(SpawnEnemies());
         }
 
@@ -87,24 +112,56 @@ namespace DD.Core
             {
                 for (int i = 0; i < enemiesPerWave; i++)
                 {
-                    SpawnEnemy();
-                    yield return new WaitForSeconds(spawnDelay); // Wait for the delay before spawning the next enemy
+                    if (currentSpawnCountTier1 < amountOfTier1Enemies)
+                    {
+                        currentSpawnCountTier1++;
+                        SpawnEnemy(tier1EnemyPrefab);
+                        yield return new WaitForSeconds(spawnDelay);
+                    }
+                    else if (currentSpawnCountTier2 < amountOfTier2Enemies)
+                    {
+                        currentSpawnCountTier2++;
+                        SpawnEnemy(tier2EnemyPrefab);
+                        yield return new WaitForSeconds(spawnDelay);
+                    }
+                    else if (currentSpawnCountTier3 < amountOfTier3Enemies)
+                    {
+                        currentSpawnCountTier3++;
+                        SpawnEnemy(tier3EnemyPrefab);
+                        yield return new WaitForSeconds(spawnDelay);
+                    }
                 }
+                StartCoroutine(Countdown(spawnInterval));
                 yield return new WaitForSeconds(spawnInterval); // Wait for the next wave
             }
         }
 
-        private void SpawnEnemy()
+        IEnumerator Countdown(float seconds)
         {
+            float counter = seconds;
 
+            tooltipTextMesh.text = counter.ToString();
+            tooltipTextMesh.transform.rotation = Camera.main.transform.rotation;
+            while (counter > 0)
+            {
+                tooltipTextMesh.gameObject.SetActive(true);
+                yield return new WaitForSeconds(1);
+                counter--;
+                tooltipTextMesh.text = counter.ToString();
+            }
+        }
+
+        private void SpawnEnemy(GameObject enemyToSpawn)
+        {
             if (currentSpawnCount >= maxEnemiesThisMission)
             {
                 Debug.Log("Max enemies have been spawned");
+                tooltipTextMesh.gameObject.SetActive(false);
                 return;
             }
 
             int spawnIndex = Random.Range(0, spawnPoints.Length);
-            GameObject enemy = Instantiate(enemyPrefab, spawnPoints[spawnIndex].position, spawnPoints[spawnIndex].rotation);
+            GameObject enemy = Instantiate(enemyToSpawn, spawnPoints[spawnIndex].position, spawnPoints[spawnIndex].rotation);
             enemySpawned.Add(enemy);
             currentSpawnCount++;
         }
@@ -114,7 +171,7 @@ namespace DD.Core
             enemySpawned.Remove(enemy);
             currentKillCount++;
         }
-        
+
         public int GetCurrentKillCount()
         {
             return currentKillCount;

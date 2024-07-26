@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using DD.Builder.Buildings;
+using DD.Combat;
 using DD.Environment;
 using UnityEngine;
 using UnityEngine.AI;
@@ -32,10 +34,12 @@ namespace DD.Core.AI
         private Planter assignedPlanter; // Reference to the assigned Planter
         private Transform spawnPoint;
         private NavMeshAgent navMeshAgent;
+        private Health health;
 
         void Start()
         {
             navMeshAgent = GetComponent<NavMeshAgent>();
+            health = GetComponent<Health>();
 
             if (GlobalModifiers.instance != null)
             {
@@ -45,6 +49,7 @@ namespace DD.Core.AI
                 unloadSpeedPerSecond = friendlyAIModifiers.unloadSpeedPerSecond;
                 unloadAmountPerSecond = friendlyAIModifiers.unloadAmount;
                 navMeshAgent.speed = friendlyAIModifiers.movementSpeed;
+                health.health = friendlyAIModifiers.health;
             }
         }
 
@@ -53,7 +58,8 @@ namespace DD.Core.AI
 
             if (assignedPlanter == null)
             {
-                assignedPlanter = transform.root.GetComponent<Planter>();
+                assignedPlanter = transform.parent.parent.GetComponent<Planter>();
+                spawnPoint = assignedPlanter.aiSpawnPoint.transform;
             }
 
             if (materialToGather == ResourceMaterial.Material.None)

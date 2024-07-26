@@ -27,6 +27,11 @@ namespace DD.Combat
 
         private void Update()
         {
+            if(currentHealth > maxHealth)
+            {
+                maxHealth = health.health;
+            }
+            
             switch (currentHealth == maxHealth)
             {
                 case true:

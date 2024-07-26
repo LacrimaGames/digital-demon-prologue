@@ -7,7 +7,6 @@ namespace DD.Builder.Buildings
 {
     public class Tower : MonoBehaviour
     {
-
         [Header("Tower Modifiers")]
         [Range(1, 3)]
         public int tier;
@@ -23,9 +22,11 @@ namespace DD.Builder.Buildings
         public List<Health.Combatants> targets;
 
         private float fireCooldown = 0f;
+        private Health health;
 
         private void Start()
         {
+            health = GetComponent<Health>();
 
             if (GlobalModifiers.instance != null)
             {
@@ -36,18 +37,21 @@ namespace DD.Builder.Buildings
                         detectionRadius = tier1Modifiers.detectionRadius;
                         fireRate = tier1Modifiers.fireRate;
                         damage = tier1Modifiers.damage;
+                        health.health = tier1Modifiers.health;
                         break;
                     case 2:
                         GlobalModifiers.Tier2TowerModifiers tier2Modifiers = GlobalModifiers.instance.LoadTier2TowerModifiers();
                         detectionRadius = tier2Modifiers.detectionRadius;
                         fireRate = tier2Modifiers.fireRate;
                         damage = tier2Modifiers.damage;
+                        health.health = tier2Modifiers.health;
                         break;
                     case 3:
                         GlobalModifiers.Tier3TowerModifiers tier3Modifiers = GlobalModifiers.instance.LoadTier3TowerModifiers();
                         detectionRadius = tier3Modifiers.detectionRadius;
                         fireRate = tier3Modifiers.fireRate;
                         damage = tier3Modifiers.damage;
+                        health.health = tier3Modifiers.health;
                         break;
                 }
             }

@@ -206,12 +206,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 21.3
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 30
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -242,7 +242,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: -8.527679, y: -15.160282, z: -9.475197, w: 0}
+  m_margin: {x: 40.91605, y: 6.6284866, z: 37.873478, w: 11.732412}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -5060,29 +5060,53 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerModifiers:
-    gatheringSpeedPerSecond: 1
-    maxAmountHeld: 20
-    unloadSpeedPerSecond: 1
-    attackDamage: 10
+    gatheringSpeedPerSecond: 0.5
+    maxAmountHeld: 50
+    unloadSpeedPerSecond: 0.5
+    attackDamage: 20
+    attackSpeed: 2
     movementSpeed: 10
+    health: 100
   friendlyAIModifiers:
     gatheringSpeedPerSecond: 1
     maxAmountHeld: 20
     unloadSpeedPerSecond: 1
     unloadAmount: 1
     movementSpeed: 10
+    health: 100
   tier1TowerModifiers:
-    detectionRadius: 10
+    detectionRadius: 20
     fireRate: 1
     damage: 10
+    health: 100
   tier2TowerModifiers:
     detectionRadius: 20
     fireRate: 2
     damage: 15
+    health: 200
   tier3TowerModifiers:
     detectionRadius: 20
     fireRate: 3
     damage: 25
+    health: 300
+  tier1EnemyModifiers:
+    detectionRadius: 10
+    fireRate: 0.5
+    damage: 5
+    movementSpeed: 10
+    health: 100
+  tier2EnemyModifiers:
+    detectionRadius: 10
+    fireRate: 0.6
+    damage: 10
+    movementSpeed: 2
+    health: 100
+  tier3EnemyModifiers:
+    detectionRadius: 10
+    fireRate: 0.7
+    damage: 15
+    movementSpeed: 3
+    health: 100
 --- !u!1 &1398229975
 GameObject:
   m_ObjectHideFlags: 0

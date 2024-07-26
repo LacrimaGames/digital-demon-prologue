@@ -7,43 +7,78 @@ namespace DD.Bilder
     public class Upgrader : MonoBehaviour
     {
         public GameObject upgradePrefab; // The new upgraded prefab
-        public GameObject upgradeButton; 
+        public GameObject upgradeButton;
         public int cost;
+
+        public LayerMask upgradeMask;
 
         [Header("UI")]
         public TextMesh tooltipTextMesh; // Reference to the TextMesh component for displaying resources
         private Coroutine tooltip;
+        public bool replacesOldBuilding = true;
 
-        private void Start() {
-            if(upgradePrefab == null)
+        private void Start()
+        {
+            if (upgradePrefab == null)
             {
                 Destroy(upgradeButton);
                 Destroy(GetComponent<Upgrader>());
             }
         }
 
-        private void OnMouseDown()
+        private void Update()
         {
-            ReplacePrefab();
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            RaycastHit hit;
+
+
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, upgradeMask))
+            {
+                if(hit.collider.gameObject == upgradeButton)
+                {
+                    ReplacePrefab();
+                }
+            }
         }
 
         public void ReplacePrefab()
         {
-            if(GetComponent<Upgrader>().isActiveAndEnabled == false) return;
-            if(ResourceTracker.Instance.SpendGold(cost))
+            if (GetComponent<Upgrader>().isActiveAndEnabled == false) return;
+
+            if(Input.GetMouseButton(0))
             {
-                Vector3 position = transform.position;
-                Quaternion rotation = transform.rotation;
+                if (replacesOldBuilding)
+                {
+                    if (ResourceTracker.Instance.SpendGold(cost))
+                    {
+                        Vector3 position = transform.position;
+                        Quaternion rotation = transform.rotation;
 
-                Instantiate(upgradePrefab, position, rotation);
+                        Instantiate(upgradePrefab, position, rotation);
 
-                Debug.Log("Upgrade complete.");
+                        Debug.Log("Upgrade complete.");
 
-                Destroy(gameObject);
-            }
-            else
-            {
-                tooltip = StartCoroutine(ShowToolTip());
+                        Destroy(gameObject);
+                    }
+                    else
+                    {
+                        tooltip = StartCoroutine(ShowToolTip());
+                    }
+                }
+                else
+                {
+                    if (ResourceTracker.Instance.SpendGold(cost))
+                    {
+                        upgradePrefab.SetActive(true);
+                        Debug.Log("Upgrade complete.");
+                        Destroy(upgradeButton);
+                        Destroy(GetComponent<Upgrader>());
+                    }
+                    else
+                    {
+                        tooltip = StartCoroutine(ShowToolTip());
+                    }
+                }
             }
         }
 

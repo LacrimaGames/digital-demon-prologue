@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using DD.Core;
 using DD.Core.Player;
 using UnityEngine;
-using UnityEngine.Diagnostics;
 using UnityEngine.EventSystems;
 
 namespace DD.Builder.Buildings
@@ -33,8 +32,8 @@ namespace DD.Builder.Buildings
         private int currentPrefabCost = 0;
 
         void Update()
-        {
-            if(!FindFirstObjectByType<PlayerController>().isActiveAndEnabled)
+        {   
+            if (!FindFirstObjectByType<PlayerController>().isActiveAndEnabled)
             {
                 CancelPlacing();
                 return;
@@ -65,8 +64,13 @@ namespace DD.Builder.Buildings
             }
         }
 
+
         void HandlePlacement()
         {
+            // Enable for controller
+            // var input = new Vector3(Input.GetAxisRaw("HorizontalController"), Input.GetAxisRaw("VerticalController"),0);
+            // Mouse.current.WarpCursorPosition(Input.mousePosition + input);
+
             Ray ray = playerCamera.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
@@ -83,8 +87,7 @@ namespace DD.Builder.Buildings
                     Debug.Log("Can Place");
                 }
 
-
-                if (Input.GetMouseButtonDown(0)) // Left mouse button
+                if (Input.GetMouseButtonDown(0) || Input.GetButton("Submit")) // Left mouse button
                 {
                     if (IsPlacementValid())
                     {
@@ -102,7 +105,7 @@ namespace DD.Builder.Buildings
                         Debug.Log("Invalid placement: The whole prefab is not on the ground.");
                     }
                 }
-                else if (Input.GetMouseButtonDown(1) || Input.GetKey(KeyCode.Escape)) // Right mouse button to cancel
+                else if (Input.GetMouseButtonDown(1) || Input.GetKey(KeyCode.Escape) || Input.GetButton("Cancel")) // Right mouse button to cancel
                 {
                     CancelPlacing();
                 }

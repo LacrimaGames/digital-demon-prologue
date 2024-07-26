@@ -1,5 +1,6 @@
 using UnityEngine;
 using DD.Builder.Buildings;
+using DD.Core;
 
 namespace DD.Builder
 {
@@ -10,9 +11,7 @@ namespace DD.Builder
         public Storage woodStorage; // The storage object that holds wood
         public int woodNeeded; // The amount of wood needed for the house
         private int woodGathered = 0;
-
         public bool needsStone; // Toggle option for requiring stone
-
         public Storage stoneStorage; // The storage object that holds stone (if needed)
         public int stoneNeeded; // The amount of stone needed for the house
         private int stoneGathered = 0;
@@ -39,6 +38,7 @@ namespace DD.Builder
             {
                 if (components == this) continue;
                 unlocksFunction = true;
+                components.enabled = false;
             }
         }
 
@@ -156,6 +156,11 @@ namespace DD.Builder
 
         void CleanUp()
         {
+            if(gameObject.tag == "MissionObjective")
+            {
+                MissionProgressHandler.instance.FinishObjective();
+            }
+
             Destroy(constructionFence);
             Destroy(GetComponent<Builder>());
         }

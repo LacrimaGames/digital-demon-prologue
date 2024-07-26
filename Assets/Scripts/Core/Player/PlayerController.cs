@@ -9,13 +9,28 @@ namespace DD.Core.Player
 
         void Update()
         {
+            // Enable for controller
+            // if (Input.GetButtonDown("Switch"))
+            // {
+            //     if(hasWeaponEquipped)
+            //     {
+            //         hasWeaponEquipped = false;
+            //         hasToolEquipped = true;
+            //     }
+            //     else if(hasToolEquipped)
+            //     {
+            //         hasToolEquipped = false;
+            //         hasWeaponEquipped = true;
+            //     }
+            // }
+
             if (Input.GetKey(KeyCode.Alpha1))
             {
                 hasWeaponEquipped = true;
                 hasToolEquipped = !hasWeaponEquipped;
             }
 
-            if (Input.GetKey(KeyCode.Alpha2))
+            if (Input.GetKey(KeyCode.Alpha2) )
             {
                 hasToolEquipped = true;
                 hasWeaponEquipped = !hasToolEquipped;

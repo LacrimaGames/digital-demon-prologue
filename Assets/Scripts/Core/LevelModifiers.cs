@@ -12,6 +12,12 @@ namespace DD.Core
         [Range(1,3)]
         public int difficulty; // Placeholder, for now it's how many enemies per wave
 
+
+            public int amountOfTier1Enemies;
+            public int amountOfTier2Enemies;
+            public int amountOfTier3Enemies;
+
+
         public GameObject core;
 
         private void Awake()
@@ -28,12 +34,13 @@ namespace DD.Core
             }
 
             Instantiate(core);
-
-
         }
 
-        private void Start() {
-
+        private void Start()
+        {
+            numEnemiesToSpawn += amountOfTier1Enemies;
+            numEnemiesToSpawn += amountOfTier2Enemies;
+            numEnemiesToSpawn += amountOfTier3Enemies;
         }
 
         // Example method to load number of enemies to spawn from a save file or configuration
