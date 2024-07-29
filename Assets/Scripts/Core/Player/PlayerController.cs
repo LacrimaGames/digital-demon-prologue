@@ -12,24 +12,43 @@ namespace DD.Core.Player
         public AnimationClip shooting;
 
         public GameObject axe;
+        public GameObject bow;
+
+        private void Start()
+        {
+            EnableTool();
+        }
+
 
         void Update()
         {
             if (Input.GetKey(KeyCode.Alpha1))
             {
-                hasWeaponEquipped = true;
-                hasToolEquipped = !hasWeaponEquipped;
-                GetComponent<Animation>().clip = shooting;
-                axe.SetActive(false);
+                EnableTool();
             }
 
-            if (Input.GetKey(KeyCode.Alpha2) )
+            if (Input.GetKey(KeyCode.Alpha2))
             {
-                hasToolEquipped = true;
-                hasWeaponEquipped = !hasToolEquipped;
-                GetComponent<Animation>().clip = axeSwinging;
-                axe.SetActive(true);
+                EnableWeapon();
             }
+        }
+
+        private void EnableWeapon()
+        {
+            hasWeaponEquipped = true;
+            hasToolEquipped = !hasWeaponEquipped;
+            GetComponent<Animation>().clip = shooting;
+            axe.SetActive(false);
+            bow.SetActive(true);
+        }
+
+        private void EnableTool()
+        {
+            hasToolEquipped = true;
+            hasWeaponEquipped = !hasToolEquipped;
+            GetComponent<Animation>().clip = axeSwinging;
+            axe.SetActive(true);
+            bow.SetActive(false);
         }
     }
 }

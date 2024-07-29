@@ -151,13 +151,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e260338fdef7874e923936439493b55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayBeforeMissionStart: 100
+  delayBeforeMissionStart: 60
   difficulty: 2
-  amountOfTier1Enemies: 2
+  amountOfTier1Enemies: 4
   amountOfTier2Enemies: 2
   amountOfTier3Enemies: 2
   spawnInterval: 5
-  core: {fileID: 7212832911607606341, guid: 37d5dee93f244b54b9660d1a0a1e5f58, type: 3}
+  enabledBuildings: 0000000001000000
+  core: {fileID: 4682995912077089645, guid: b5c924783c6a6a84b9dc5b5bbd805ab3, type: 3}
 --- !u!4 &284229768
 Transform:
   m_ObjectHideFlags: 0

@@ -32,7 +32,7 @@ namespace DD.Core.Player
             {
                 GlobalModifiers.PlayerModifiers playerModifiers = GlobalModifiers.instance.LoadPlayerModifiers();
                 damage = playerModifiers.attackDamage;
-                attackSpeed = playerModifiers.attackSpeed;
+                attackSpeed = playerModifiers.fireRate;
                 health.health = playerModifiers.health;
             }
         }

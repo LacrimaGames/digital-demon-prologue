@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace DD.Core
@@ -17,6 +18,15 @@ namespace DD.Core
         public int amountOfTier3Enemies;
 
         public float spawnInterval;
+
+        public enum Buildings
+        {
+            Market,
+            StonePlantation,
+            Tower
+        }
+
+        public List<Buildings> enabledBuildings = new List<Buildings>();
 
         public GameObject core;
 

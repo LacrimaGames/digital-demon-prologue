@@ -16,6 +16,8 @@ namespace DD.Core
 
         private bool levelCleared = false;
 
+        public int bonusHealth = 100;
+
 
         private void Awake()
         {
@@ -74,6 +76,10 @@ namespace DD.Core
 
         public void GoBackToMenu()
         {
+            if(levelCleared)
+            {
+                GlobalModifiers.instance.playerModifiers.health += bonusHealth;
+            }
             LevelLoader.Instance.LevelCleared(level, levelCleared);
             LevelLoader.Instance.LoadScene(0);
         }

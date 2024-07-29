@@ -15,6 +15,7 @@ TagManager:
   - MissionObjective
   - EnemyAI
   - FriendlyAI
+  - Level
   layers:
   - Default
   - TransparentFX

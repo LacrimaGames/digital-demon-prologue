@@ -6402,7 +6402,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &678784977
 Transform:
   m_ObjectHideFlags: 0
@@ -11090,7 +11090,7 @@ MonoBehaviour:
     maxAmountHeld: 50
     unloadSpeedPerSecond: 0.5
     attackDamage: 30
-    attackSpeed: 3
+    fireRate: 2
     movementSpeed: 10
     health: 100
   friendlyAIModifiers:
@@ -11119,20 +11119,20 @@ MonoBehaviour:
     detectionRadius: 10
     fireRate: 0.5
     damage: 5
-    movementSpeed: 10
+    movementSpeed: 7
     health: 100
   tier2EnemyModifiers:
     detectionRadius: 10
     fireRate: 0.6
     damage: 10
-    movementSpeed: 2
-    health: 100
+    movementSpeed: 6
+    health: 120
   tier3EnemyModifiers:
     detectionRadius: 10
     fireRate: 0.7
     damage: 15
-    movementSpeed: 3
-    health: 100
+    movementSpeed: 5
+    health: 130
 --- !u!1 &1434945208
 GameObject:
   m_ObjectHideFlags: 0
@@ -16832,7 +16832,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2095009779
 Transform:
   m_ObjectHideFlags: 0

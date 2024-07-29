@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tier: 1
-  bulletPrefab: {fileID: 6582589674814875814, guid: 9086390e404b6854d9b601b6bca16c83, type: 3}
+  bulletPrefab: {fileID: 6582589674814875814, guid: d160e7c8b1b92e54fae4a4e285dc379e, type: 3}
   firePoint: {fileID: 2675957595596658821}
   targets: 02000000
 --- !u!114 &7498587915685531869

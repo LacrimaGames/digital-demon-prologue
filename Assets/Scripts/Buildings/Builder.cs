@@ -1,6 +1,7 @@
 using UnityEngine;
 using DD.Builder.Buildings;
 using DD.Core;
+using DD.Combat;
 
 namespace DD.Builder
 {
@@ -36,7 +37,7 @@ namespace DD.Builder
         {
             foreach (var components in GetComponents<MonoBehaviour>())
             {
-                if (components == this) continue;
+                if (components == this || components == GetComponent<Health>()) continue;
                 unlocksFunction = true;
                 components.enabled = false;
             }
