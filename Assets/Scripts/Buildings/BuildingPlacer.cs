@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using DD.Core;
 using DD.Core.Player;
@@ -15,6 +16,10 @@ namespace DD.Builder.Buildings
 
         BoxCollider prefabCollider;
 
+        public TextMesh tooltipMesh;
+        private Coroutine tooltip;
+
+
         [System.Serializable]
         public class BuildingData
         {
@@ -31,8 +36,14 @@ namespace DD.Builder.Buildings
         private bool isPlacing = false;
         private int currentPrefabCost = 0;
 
+        private void Start()
+        {
+            tooltipMesh.transform.rotation = Camera.main.transform.rotation;
+            tooltipMesh.gameObject.SetActive(false);
+        }
+
         void Update()
-        {   
+        {
             if (!FindFirstObjectByType<PlayerController>().isActiveAndEnabled)
             {
                 CancelPlacing();
@@ -97,11 +108,13 @@ namespace DD.Builder.Buildings
                         }
                         else
                         {
+                            tooltip = StartCoroutine(ShowToolTip("Not enough gold to place the building"));
                             Debug.Log("Not enough gold to place the building.");
                         }
                     }
                     else
                     {
+                        tooltip = StartCoroutine(ShowToolTip("Invalid placement"));
                         Debug.Log("Invalid placement: The whole prefab is not on the ground.");
                     }
                 }
@@ -130,7 +143,7 @@ namespace DD.Builder.Buildings
                 new Vector3(bounds.max.x, bounds.min.y, bounds.max.z)
             };
 
-            if(currentPrefab.tag == "Tower")
+            if (currentPrefab.tag == "Tower")
             {
                 foreach (var point in checkPoints)
                 {
@@ -145,7 +158,7 @@ namespace DD.Builder.Buildings
                     }
                 }
             }
-            if(currentPrefab.tag == "Structure")
+            if (currentPrefab.tag == "Structure")
             {
                 foreach (var point in checkPoints)
                 {
@@ -186,11 +199,25 @@ namespace DD.Builder.Buildings
 
         void CancelPlacing()
         {
-            if(prefabPreview != null)
+            if (prefabPreview != null)
             {
                 Destroy(prefabPreview);
             }
             isPlacing = false;
+        }
+
+        private IEnumerator ShowToolTip(string text)
+        {
+            if(tooltip != null) StopCoroutine(tooltip);
+            tooltipMesh.gameObject.SetActive(true);
+            // Update the tooltip text with the current resources in the storage
+            tooltipMesh.text = text;
+            //     // Make the tooltip face the camera
+            tooltipMesh.transform.rotation = Camera.main.transform.rotation;
+            tooltipMesh.transform.position = prefabPreview.transform.position - new Vector3(0,0,-5);
+            yield return new WaitForSeconds(2);
+            tooltipMesh.gameObject.SetActive(false);
+            tooltip = null;
         }
     }
 }

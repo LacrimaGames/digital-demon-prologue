@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 
 namespace DD.Core
@@ -11,6 +11,11 @@ namespace DD.Core
         private bool objectiveIsBuilt = false;
 
         public static MissionProgressHandler instance;
+
+        public int level;
+
+        private bool levelCleared = false;
+
 
         private void Awake()
         {
@@ -47,14 +52,18 @@ namespace DD.Core
             {
                 Debug.Log("You won");
                 Destroy(EnemySpawner.Instance);
+                backToMenuScreen.transform.GetChild(2).GetComponent<TMP_Text>().text = "You won!";
                 backToMenuScreen.SetActive(true);
+                levelCleared = true;
             }
 
             if (missionObjectives.Count <= 0)
             {
                 Debug.Log("You Lost");
                 Destroy(EnemySpawner.Instance);
+                backToMenuScreen.transform.GetChild(2).GetComponent<TMP_Text>().text = "You lost";
                 backToMenuScreen.SetActive(true);
+                levelCleared = false;
             }
         }
 
@@ -65,6 +74,7 @@ namespace DD.Core
 
         public void GoBackToMenu()
         {
+            LevelLoader.Instance.LevelCleared(level, levelCleared);
             LevelLoader.Instance.LoadScene(0);
         }
 

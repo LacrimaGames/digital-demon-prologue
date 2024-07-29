@@ -7,16 +7,16 @@ namespace DD.Core
         public static LevelModifier instance; // Singleton instance
 
         // Variables to hold level data
-        public int numEnemiesToSpawn;
+        private int numEnemiesToSpawn;
         public int delayBeforeMissionStart;
-        [Range(1,3)]
+        [Range(1, 3)]
         public int difficulty; // Placeholder, for now it's how many enemies per wave
 
+        public int amountOfTier1Enemies;
+        public int amountOfTier2Enemies;
+        public int amountOfTier3Enemies;
 
-            public int amountOfTier1Enemies;
-            public int amountOfTier2Enemies;
-            public int amountOfTier3Enemies;
-
+        public float spawnInterval;
 
         public GameObject core;
 
@@ -58,6 +58,12 @@ namespace DD.Core
         {
             // Replace with actual loading logic
             return difficulty; // Default value
+        }
+
+        public float LoadSpawnInterval()
+        {
+            // Replace with actual loading logic
+            return spawnInterval; // Default value
         }
     }
 

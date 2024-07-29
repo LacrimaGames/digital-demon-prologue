@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace DD.Core
@@ -46,7 +47,6 @@ namespace DD.Core
 
         public TextMesh tooltipTextMesh; // Reference to the TextMesh component for displaying resources
 
-        private float countdownTilNextSpawn;
 
 
         private void Awake()
@@ -70,12 +70,12 @@ namespace DD.Core
             maxEnemiesThisMission = LevelModifier.instance.LoadNumEnemiesToSpawn();
             enemiesPerWave = LevelModifier.instance.LoadDifficulty();
             delayBeforeMissionStart = LevelModifier.instance.LoadDelayBeforeMissionStart();
-            spawnInterval /= LevelModifier.instance.LoadDifficulty();
+            spawnInterval = LevelModifier.instance.LoadSpawnInterval();
             amountOfTier1Enemies = LevelModifier.instance.amountOfTier1Enemies;
             amountOfTier2Enemies = LevelModifier.instance.amountOfTier2Enemies;
             amountOfTier3Enemies = LevelModifier.instance.amountOfTier3Enemies;
             tooltipTextMesh.gameObject.SetActive(false);
-            countdownTilNextSpawn = spawnInterval + delayBeforeMissionStart;
+
 
             StartGame();
         }
@@ -85,6 +85,16 @@ namespace DD.Core
             if (!gameStarted)
             {
                 StartCoroutine(CountdownToStart());
+            }
+        }
+
+        private void Update()
+        {
+            if (currentSpawnCount >= maxEnemiesThisMission)
+            {
+                Debug.Log("Max enemies have been spawned");
+                tooltipTextMesh.gameObject.SetActive(false);
+                StopAllCoroutines();
             }
         }
 
@@ -103,13 +113,25 @@ namespace DD.Core
             }
 
             gameStarted = true;
+            textTimeUntilSpawn.transform.parent.gameObject.SetActive(false);
             StartCoroutine(SpawnEnemies());
+        }
+
+        public void SkipTime()
+        {
+            if (countdownTime > 5)
+            {
+                countdownTime = 4;
+            }
         }
 
         private IEnumerator SpawnEnemies()
         {
+
             while (true)
             {
+
+
                 for (int i = 0; i < enemiesPerWave; i++)
                 {
                     if (currentSpawnCountTier1 < amountOfTier1Enemies)
@@ -142,9 +164,11 @@ namespace DD.Core
 
             tooltipTextMesh.text = counter.ToString();
             tooltipTextMesh.transform.rotation = Camera.main.transform.rotation;
+
             while (counter > 0)
             {
                 tooltipTextMesh.gameObject.SetActive(true);
+
                 yield return new WaitForSeconds(1);
                 counter--;
                 tooltipTextMesh.text = counter.ToString();
@@ -153,13 +177,6 @@ namespace DD.Core
 
         private void SpawnEnemy(GameObject enemyToSpawn)
         {
-            if (currentSpawnCount >= maxEnemiesThisMission)
-            {
-                Debug.Log("Max enemies have been spawned");
-                tooltipTextMesh.gameObject.SetActive(false);
-                return;
-            }
-
             int spawnIndex = Random.Range(0, spawnPoints.Length);
             GameObject enemy = Instantiate(enemyToSpawn, spawnPoints[spawnIndex].position, spawnPoints[spawnIndex].rotation);
             enemySpawned.Add(enemy);

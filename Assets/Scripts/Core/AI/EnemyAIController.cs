@@ -140,6 +140,7 @@ namespace DD.Core.AI
                 {
                     Shoot(target);
                     fireCooldown = 1f / fireRate;
+                    // GetComponent<Animation>().Play();
                 }
             }
         }

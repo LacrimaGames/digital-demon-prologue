@@ -1,17 +1,20 @@
 using DD.Core;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class ButtonEvent : MonoBehaviour
 {
     public SceneAsset sceneToLoad;
-    void Start()
+    private TextMesh textMesh;
+
+    private void Start()
     {
-        GetComponent<Button>().onClick.AddListener(LoadLevel);
+        textMesh = GetComponentInChildren<TextMesh>();
+        transform.rotation = Camera.main.transform.rotation;
+        textMesh.text = sceneToLoad.name;
     }
 
-    void LoadLevel()
+    private void OnMouseDown()
     {
         LevelLoader.Instance.LoadScene(sceneToLoad.name);
     }

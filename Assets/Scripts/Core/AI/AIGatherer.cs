@@ -1,4 +1,3 @@
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using DD.Builder.Buildings;
@@ -78,7 +77,6 @@ namespace DD.Core.AI
             gatherTimer -= Time.deltaTime;
             unloadTimer -= Time.deltaTime;
             availableResource = assignedPlanter.GetAvailableTrees();
-
 
             if (amountHeld >= maxAmountHeld)
             {
@@ -181,7 +179,6 @@ namespace DD.Core.AI
             direction.y = 0;
             transform.rotation = Quaternion.LookRotation(direction);
             navMeshAgent.SetDestination(targetPosition);
-            // transform.Translate(direction * moveSpeed * Time.deltaTime, Space.World);
         }
 
         GameObject FindNearestTree()
@@ -200,7 +197,6 @@ namespace DD.Core.AI
                     nearestTree = tree;
                 }
             }
-
             return nearestTree;
         }
     }

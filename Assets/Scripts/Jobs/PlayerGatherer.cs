@@ -30,6 +30,8 @@ namespace DD.Jobs
 
         private PlayerController playerController;
 
+        public bool isGathering = false;
+
         private void Start()
         {
             playerController = GetComponent<PlayerController>();
@@ -122,9 +124,9 @@ namespace DD.Jobs
                         gatherTimer = gatheringSpeedPerSecond;
                         amountHeld++;
                         typeOfMaterialHeld = resource.resourceMaterial;
+                        GetComponent<Animation>().Play();
                         //break; // Only gather one resource at a time
                     }
-
                 }
             }
         }
@@ -139,6 +141,7 @@ namespace DD.Jobs
             {
                 return false; // Prevent gathering if at max capacity
             }
+            isGathering = true;
             return true;
         }
 

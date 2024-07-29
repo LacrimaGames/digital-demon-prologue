@@ -51,6 +51,7 @@ namespace DD.Core.Player
                 {
                     Shoot(enemy);
                     fireCooldown = 1f / attackSpeed;
+                    GetComponent<Animation>().Play();
                     break;
                 }
             }
