@@ -10,8 +10,8 @@ public class ButtonEvent : MonoBehaviour
     private void Start()
     {
         textMesh = GetComponentInChildren<TextMesh>();
-        transform.rotation = Camera.main.transform.rotation;
-        textMesh.text = sceneToLoad.name;
+        // transform.rotation = Camera.main.transform.rotation;
+        // textMesh.text = sceneToLoad.name;
     }
 
     private void OnMouseDown()

@@ -1,4 +1,5 @@
 using System.Collections;
+using DD.Builder.Buildings;
 using DD.Core;
 using UnityEngine;
 
@@ -17,17 +18,23 @@ namespace DD.Bilder
         private Coroutine tooltip;
         public bool replacesOldBuilding = true;
         public bool canUpgrade = true;
+        public GameObject acceptButton;
+        public GameObject denyButton;
 
         private void Start()
         {
-            if(!canUpgrade)
+            if (!canUpgrade)
             {
                 upgradeButton.SetActive(false);
             }
             else
             {
                 upgradeButton.SetActive(true);
+                acceptButton = upgradeButton.transform.GetChild(0).gameObject;
+                denyButton = upgradeButton.transform.GetChild(1).gameObject;
+                upgradeButton.transform.rotation = Camera.main.transform.rotation;
             }
+
             if (upgradePrefab == null)
             {
                 Destroy(upgradeButton);
@@ -40,12 +47,34 @@ namespace DD.Bilder
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, upgradeMask))
             {
-                if(hit.collider.gameObject == upgradeButton)
+                if (hit.collider.gameObject == upgradeButton && Input.GetMouseButtonDown(0))
+                {
+                    if(acceptButton.activeSelf)
+                    {
+                        upgradeButton.GetComponent<Animation>().clip = upgradeButton.GetComponent<Animation>().GetClip("CloseUpgradeTooltip");
+                        upgradeButton.GetComponent<Animation>().Play();
+                    }
+                    else
+                    {
+                        upgradeButton.GetComponent<Animation>().clip = upgradeButton.GetComponent<Animation>().GetClip("OpenUpgradeTooltip");
+                        upgradeButton.GetComponent<Animation>().Play();
+                    }
+                }
+                if (hit.collider.gameObject == acceptButton && Input.GetMouseButtonDown(0))
                 {
                     ReplacePrefab();
+                }
+                if (hit.collider.gameObject == denyButton && Input.GetMouseButtonDown(0))
+                {
+                    upgradeButton.GetComponent<Animation>().clip = upgradeButton.GetComponent<Animation>().GetClip("CloseUpgradeTooltip");
+                    upgradeButton.GetComponent<Animation>().Play();
+                }
+                else if(Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
+                {
+                    upgradeButton.GetComponent<Animation>().clip = upgradeButton.GetComponent<Animation>().GetClip("CloseUpgradeTooltip");
+                    upgradeButton.GetComponent<Animation>().Play();
                 }
             }
         }
@@ -54,7 +83,7 @@ namespace DD.Bilder
         {
             if (GetComponent<Upgrader>().isActiveAndEnabled == false) return;
 
-            if(Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0))
             {
                 if (replacesOldBuilding)
                 {
@@ -63,9 +92,12 @@ namespace DD.Bilder
                         Vector3 position = transform.position;
                         Quaternion rotation = transform.rotation;
 
-                        Instantiate(upgradePrefab, position, rotation);
+                        GameObject newObject = Instantiate(upgradePrefab, position, rotation);
 
-                        Debug.Log("Upgrade complete.");
+                        if (newObject.tag == "Tower")
+                        {
+                            newObject.GetComponent<Tower>().attackPriority = GetComponent<Tower>().attackPriority;
+                        }
 
                         Destroy(gameObject);
                     }

@@ -1,11 +1,9 @@
 using System;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using DD.Combat;
 using DD.Core;
 using DD.Core.AI;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace DD.Builder.Buildings
 {
@@ -30,6 +28,8 @@ namespace DD.Builder.Buildings
         private float fireCooldown = 0f;
         private Health health;
 
+        public GameObject tooltipCollection;
+
         public enum Priority
         {
             LowestHealth,
@@ -41,6 +41,7 @@ namespace DD.Builder.Buildings
 
         private void Start()
         {
+            tooltipCollection.transform.rotation = Camera.main.transform.rotation;
             health = GetComponent<Health>();
 
             if (GlobalModifiers.instance != null)

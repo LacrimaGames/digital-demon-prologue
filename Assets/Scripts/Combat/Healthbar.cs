@@ -41,6 +41,10 @@ namespace DD.Combat
                     healthBar.SetActive(true);
                     break;
             }
+            if(health.tag == "Tower")
+            {
+                healthBar.SetActive(true);
+            }
 
             transform.rotation = Camera.main.transform.rotation;
             currentHealth = health.health;
