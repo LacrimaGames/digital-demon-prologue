@@ -147,7 +147,9 @@ MonoBehaviour:
   tier: 2
   bulletPrefab: {fileID: 6582589674814875814, guid: 9086390e404b6854d9b601b6bca16c83, type: 3}
   firePoint: {fileID: 2675957595596658821}
-  targets: 02000000
+  viableTargets: 02000000
+  targets: []
+  attackPriority: 0
 --- !u!114 &7498587915685531869
 MonoBehaviour:
   m_ObjectHideFlags: 0

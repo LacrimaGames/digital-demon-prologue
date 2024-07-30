@@ -1,7 +1,11 @@
+using System;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using DD.Combat;
 using DD.Core;
+using DD.Core.AI;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace DD.Builder.Buildings
 {
@@ -19,10 +23,21 @@ namespace DD.Builder.Buildings
 
         public GameObject bulletPrefab; // Prefab of the bullet to be shot
         public Transform firePoint; // The point from which the bullet will be shot
-        public List<Health.Combatants> targets;
+        public List<Health.Combatants> viableTargets;
+
+        public List<Health> targets = new List<Health>();
 
         private float fireCooldown = 0f;
         private Health health;
+
+        public enum Priority
+        {
+            LowestHealth,
+            HighestTier,
+            Closest
+        }
+
+        public Priority attackPriority;
 
         private void Start()
         {
@@ -67,13 +82,66 @@ namespace DD.Builder.Buildings
             foreach (var hitCollider in hitColliders)
             {
                 Health enemy = hitCollider.GetComponent<Health>();
-                if (enemy != null && IsEnemyTarget(enemy) && fireCooldown <= 0f)
+
+                if (enemy != null && IsEnemyTarget(enemy))
                 {
-                    Shoot(enemy);
-                    fireCooldown = 1f / fireRate;
-                    break;
+                    if(!targets.Contains(enemy))
+                    {
+                        targets.Add(enemy);
+                    }
+
+                    enemy = DeterminePriority();
+
+
+
+                    if (fireCooldown <= 0f)
+                    {
+                        Shoot(enemy);
+                        fireCooldown = 1f / fireRate;
+                        break;
+                    }
                 }
             }
+        }
+
+        Health DeterminePriority()
+        {
+            Health enemyToPrioritize = null;
+            CheckForCasualities();
+            if (attackPriority == Priority.LowestHealth)
+            {
+                float tempHealth = 1000f;
+                foreach (Health target in targets)
+                {
+                    if(tempHealth < target.health) continue;
+                    tempHealth = target.health;
+                    enemyToPrioritize = target;
+                }
+            }
+
+            if (attackPriority == Priority.HighestTier)
+            {
+                float tempTier = 0f;
+                foreach (Health target in targets)
+                {
+                    if (tempTier >= target.GetComponent<EnemyAIController>().tier) continue;
+                    tempTier = target.GetComponent<EnemyAIController>().tier;
+                    enemyToPrioritize = target;
+                }
+            }
+
+            if (attackPriority == Priority.Closest)
+            {
+                float tempDistance = detectionRadius;
+                foreach (Health target in targets)
+                {
+                    if (tempDistance < Vector3.Distance(transform.position, target.transform.position)) continue;
+                    tempDistance = Vector3.Distance(transform.position, target.transform.position);
+                    enemyToPrioritize = target;
+                }
+            }
+
+            return enemyToPrioritize;
         }
 
         void Shoot(Health enemy)
@@ -82,11 +150,31 @@ namespace DD.Builder.Buildings
             GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
             Bullet bulletScript = bullet.GetComponent<Bullet>();
             bulletScript.SetTarget(enemy, damage);
+
+        }
+
+        private void CheckForCasualities()
+        {
+
+            List<Health> targetsToRemove = new List<Health>();
+
+            foreach (Health target in targets)
+            {
+                if (target == null || Vector3.Distance(transform.position, target.transform.position) > detectionRadius)
+                {
+                    targetsToRemove.Add(target);
+                }
+            }
+
+            foreach (Health target in targetsToRemove)
+            {
+                targets.Remove(target);
+            }
         }
 
         bool IsEnemyTarget(Health attemptedTarget)
         {
-            foreach (Health.Combatants target in targets)
+            foreach (Health.Combatants target in viableTargets)
             {
                 if (attemptedTarget.combatants == target)
                 {
