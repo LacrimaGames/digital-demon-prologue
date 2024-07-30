@@ -154,7 +154,7 @@ GameObject:
   - component: {fileID: 242866023821922062}
   - component: {fileID: 549481494247356378}
   m_Layer: 8
-  m_Name: Stone Plantation
+  m_Name: Stone Plantation No Upgrade
   m_TagString: Structure
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -295,7 +295,7 @@ MonoBehaviour:
     m_Bits: 4096
   tooltipTextMesh: {fileID: 0}
   replacesOldBuilding: 0
-  canUpgrade: 1
+  canUpgrade: 0
 --- !u!1 &1908954384456109475
 GameObject:
   m_ObjectHideFlags: 0

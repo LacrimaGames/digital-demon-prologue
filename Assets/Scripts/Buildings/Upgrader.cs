@@ -16,9 +16,18 @@ namespace DD.Bilder
         public TextMesh tooltipTextMesh; // Reference to the TextMesh component for displaying resources
         private Coroutine tooltip;
         public bool replacesOldBuilding = true;
+        public bool canUpgrade = true;
 
         private void Start()
         {
+            if(!canUpgrade)
+            {
+                upgradeButton.SetActive(false);
+            }
+            else
+            {
+                upgradeButton.SetActive(true);
+            }
             if (upgradePrefab == null)
             {
                 Destroy(upgradeButton);

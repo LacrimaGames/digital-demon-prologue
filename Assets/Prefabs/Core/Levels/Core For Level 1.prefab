@@ -32,6 +32,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 996044776428332890, guid: 17feed620e14fba4b9a3f189b055bc7b, type: 3}
+      propertyPath: buildings.Array.data[1].buildingPrefab
+      value: 
+      objectReference: {fileID: 1376308887518107195, guid: 0a6930d7ed9888b41ac97601710f627e, type: 3}
+    - target: {fileID: 1088465675472299610, guid: 17feed620e14fba4b9a3f189b055bc7b, type: 3}
+      propertyPath: canUpgrade
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1732843052417105669, guid: 17feed620e14fba4b9a3f189b055bc7b, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -103,6 +111,10 @@ PrefabInstance:
     - target: {fileID: 3192116084831809212, guid: 17feed620e14fba4b9a3f189b055bc7b, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4997234192908176107, guid: 17feed620e14fba4b9a3f189b055bc7b, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5769248464375871295, guid: 17feed620e14fba4b9a3f189b055bc7b, type: 3}
       propertyPath: m_LocalPosition.x
