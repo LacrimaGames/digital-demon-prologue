@@ -26,6 +26,11 @@ namespace DD.Core.Player
         }
         void Update()
         {
+            if(LevelModifier.instance.sandboxMode)
+            {
+                GlobalModifiers.PlayerModifiers playerModifiers = GlobalModifiers.instance.LoadPlayerModifiers();
+                movementSpeed = playerModifiers.movementSpeed;
+            }
             Move();
         }
 
