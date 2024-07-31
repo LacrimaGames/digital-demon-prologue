@@ -18,6 +18,10 @@ namespace DD.Combat
             if (health == null)
             {
                 health = transform.parent.GetComponent<Health>();
+                if (health == null)
+                {
+                    health = transform.parent.parent.GetComponent<Health>();
+                }
             }
 
             maxHealth = health.health;
@@ -40,6 +44,10 @@ namespace DD.Combat
                 default:
                     healthBar.SetActive(true);
                     break;
+            }
+            if(health.tag == "Tower")
+            {
+                healthBar.SetActive(true);
             }
 
             transform.rotation = Camera.main.transform.rotation;

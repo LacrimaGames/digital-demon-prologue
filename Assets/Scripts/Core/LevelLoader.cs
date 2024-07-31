@@ -36,6 +36,7 @@ namespace DD.Core
 
         public void LevelCleared(int level, bool state)
         {
+            if(levels.Count == level) return;
             if(state == true && levels.Count >= level)
             {
                 levels[level].SetActive(true);
