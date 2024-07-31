@@ -13,7 +13,7 @@ namespace DD.Core
             public int maxAmountHeld = 20; // Max amount player can carry
             public float unloadSpeedPerSecond = 1; // Speed of unloading materials (units per second)
             public int attackDamage = 10; // Damage dealt per shot
-            public float fireRate = 10; // Rate of firing bullets per second
+            public float fireRate = 10.5f; // Rate of firing bullets per second
             public float movementSpeed = 5f;
             public int health = 100;
         }

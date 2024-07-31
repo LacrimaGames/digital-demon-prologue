@@ -158,6 +158,15 @@ MonoBehaviour:
   amountOfTier3Enemies: 2
   spawnInterval: 5
   enabledBuildings: 0000000001000000
+  reward1:
+    reward: 4
+    rewardAmount: 5
+  reward2:
+    reward: 2
+    rewardAmount: 5
+  reward3:
+    reward: 3
+    rewardAmount: 3
   core: {fileID: 4682995912077089645, guid: b5c924783c6a6a84b9dc5b5bbd805ab3, type: 3}
 --- !u!4 &284229768
 Transform:

@@ -73,6 +73,37 @@ namespace DD.Core.AI
 
         void Update()
         {
+            if(LevelModifier.instance.sandboxMode)
+            {
+                if (GlobalModifiers.instance != null)
+                {
+                    switch (tier)
+                    {
+                        case 1:
+                            GlobalModifiers.Tier1EnemyModifiers tier1Modifiers = GlobalModifiers.instance.LoadTier1EnemyModifiers();
+                            detectionRadius = tier1Modifiers.detectionRadius;
+                            fireRate = tier1Modifiers.fireRate;
+                            damage = tier1Modifiers.damage;
+                            navMeshAgent.speed = tier1Modifiers.movementSpeed;
+                            break;
+                        case 2:
+                            GlobalModifiers.Tier2EnemyModifiers tier2Modifiers = GlobalModifiers.instance.LoadTier2EnemyModifiers();
+                            detectionRadius = tier2Modifiers.detectionRadius;
+                            fireRate = tier2Modifiers.fireRate;
+                            damage = tier2Modifiers.damage;
+                            navMeshAgent.speed = tier2Modifiers.movementSpeed;
+                            break;
+                        case 3:
+                            GlobalModifiers.Tier3EnemyModifiers tier3Modifiers = GlobalModifiers.instance.LoadTier3EnemyModifiers();
+                            detectionRadius = tier3Modifiers.detectionRadius;
+                            fireRate = tier3Modifiers.fireRate;
+                            damage = tier3Modifiers.damage;
+                            navMeshAgent.speed = tier3Modifiers.movementSpeed;
+                            break;
+                    }
+                }
+            }
+
             DetectTargets();
             MoveTowardsDestination();
         }

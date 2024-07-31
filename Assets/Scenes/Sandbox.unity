@@ -151,23 +151,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e260338fdef7874e923936439493b55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayBeforeMissionStart: 220
-  difficulty: 2
-  amountOfTier1Enemies: 10
-  amountOfTier2Enemies: 10
-  amountOfTier3Enemies: 10
-  spawnInterval: 10
+  sandboxMode: 1
+  noRewardsThisTurn: 1
+  delayBeforeMissionStart: 9999
+  difficulty: 10
+  amountOfTier1Enemies: 0
+  amountOfTier2Enemies: 0
+  amountOfTier3Enemies: 300
+  spawnInterval: 0.5
   enabledBuildings: 000000000100000002000000
   reward1:
     reward: 5
-    rewardAmount: 100
+    rewardAmount: 0
   reward2:
     reward: 8
-    rewardAmount: 5
+    rewardAmount: 0
   reward3:
     reward: 10
-    rewardAmount: 10
-  core: {fileID: 8086084610298946298, guid: 46ef11eda3362044a8ee75efa05dd2cc, type: 3}
+    rewardAmount: 0
+  core: {fileID: 8086084610298946298, guid: f4d53f68920a0254abae460865a70708, type: 3}
 --- !u!4 &284229768
 Transform:
   m_ObjectHideFlags: 0

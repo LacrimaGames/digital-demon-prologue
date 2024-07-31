@@ -77,6 +77,37 @@ namespace DD.Builder.Buildings
 
         void Update()
         {
+            if(LevelModifier.instance.sandboxMode)
+            {
+                if (GlobalModifiers.instance != null)
+                {
+                    switch (tier)
+                    {
+                        case 1:
+                            GlobalModifiers.Tier1TowerModifiers tier1Modifiers = GlobalModifiers.instance.LoadTier1TowerModifiers();
+                            detectionRadius = tier1Modifiers.detectionRadius;
+                            fireRate = tier1Modifiers.fireRate;
+                            damage = tier1Modifiers.damage;
+                            health.health = tier1Modifiers.health;
+                            break;
+                        case 2:
+                            GlobalModifiers.Tier2TowerModifiers tier2Modifiers = GlobalModifiers.instance.LoadTier2TowerModifiers();
+                            detectionRadius = tier2Modifiers.detectionRadius;
+                            fireRate = tier2Modifiers.fireRate;
+                            damage = tier2Modifiers.damage;
+                            health.health = tier2Modifiers.health;
+                            break;
+                        case 3:
+                            GlobalModifiers.Tier3TowerModifiers tier3Modifiers = GlobalModifiers.instance.LoadTier3TowerModifiers();
+                            detectionRadius = tier3Modifiers.detectionRadius;
+                            fireRate = tier3Modifiers.fireRate;
+                            damage = tier3Modifiers.damage;
+                            health.health = tier3Modifiers.health;
+                            break;
+                    }
+                }
+            }
+            
             fireCooldown -= Time.deltaTime;
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius);
 

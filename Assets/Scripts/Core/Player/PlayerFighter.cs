@@ -41,6 +41,14 @@ namespace DD.Core.Player
         {
             if (!playerController.hasWeaponEquipped) return;
 
+            if (LevelModifier.instance.sandboxMode)
+            {
+                GlobalModifiers.PlayerModifiers playerModifiers = GlobalModifiers.instance.LoadPlayerModifiers();
+                damage = playerModifiers.attackDamage;
+                attackSpeed = playerModifiers.fireRate;
+                health.health = playerModifiers.health;
+            }
+
             fireCooldown -= Time.deltaTime;
             Collider[] hitColliders = Physics.OverlapSphere(transform.position, detectionRadius);
 

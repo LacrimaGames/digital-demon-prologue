@@ -87,7 +87,7 @@ namespace DD.Bilder
             {
                 if (replacesOldBuilding)
                 {
-                    if (ResourceTracker.Instance.SpendGold(cost))
+                    if (ResourceTracker.Instance.SpendGold(cost) || LevelModifier.instance.sandboxMode)
                     {
                         Vector3 position = transform.position;
                         Quaternion rotation = transform.rotation;

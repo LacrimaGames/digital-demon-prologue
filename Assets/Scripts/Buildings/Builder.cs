@@ -7,7 +7,6 @@ namespace DD.Builder
 {
     public class Builder : MonoBehaviour
     {
-
         [Header("Storage")]
         public Storage woodStorage; // The storage object that holds wood
         public int woodNeeded; // The amount of wood needed for the house
@@ -33,6 +32,7 @@ namespace DD.Builder
         [Header("Preview")]
         public GameObject previewPrefab;
 
+
         private void Awake() // If object has other scripts, disable them until the building is finished
         {
             foreach (var components in GetComponents<MonoBehaviour>())
@@ -45,6 +45,15 @@ namespace DD.Builder
 
         private void Start()
         {
+            if (LevelModifier.instance.sandboxMode)
+            {
+                FinishBuilding();
+                floor.SetActive(true);
+                walls.SetActive(true);
+                roof.SetActive(true);
+                Destroy(stoneStorage.gameObject);
+                Destroy(woodStorage.gameObject);
+            }
             if (woodStorage != null)
             {
                 woodStorage.maxCapacity = woodNeeded;
@@ -84,11 +93,16 @@ namespace DD.Builder
 
             if (IsBuildingComplete())
             {
-                UnlockResource();
-                UnlockFunction();
-                UnlockUpgrade();
-                CleanUp();
+                FinishBuilding();
             }
+        }
+
+        private void FinishBuilding()
+        {
+            UnlockResource();
+            UnlockFunction();
+            UnlockUpgrade();
+            CleanUp();
         }
 
         void UpdateBuildingProgress()
