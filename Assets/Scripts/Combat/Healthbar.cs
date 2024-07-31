@@ -18,6 +18,10 @@ namespace DD.Combat
             if (health == null)
             {
                 health = transform.parent.GetComponent<Health>();
+                if (health == null)
+                {
+                    health = transform.parent.parent.GetComponent<Health>();
+                }
             }
 
             maxHealth = health.health;
