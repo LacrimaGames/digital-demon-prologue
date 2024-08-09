@@ -16,6 +16,7 @@ TagManager:
   - EnemyAI
   - FriendlyAI
   - Level
+  - UI Wrapper
   layers:
   - Default
   - TransparentFX

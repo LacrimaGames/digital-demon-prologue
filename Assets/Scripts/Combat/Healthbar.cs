@@ -23,10 +23,13 @@ namespace DD.Combat
                     health = transform.parent.parent.GetComponent<Health>();
                 }
             }
-
             maxHealth = health.health;
             fullLifeInPercentage = currentHealthObject.transform.localScale.x;
             currentHealthObject.SetActive(false);
+            if(transform.parent.tag != "UI Wrapper")
+            {
+                transform.rotation = Camera.main.transform.rotation;
+            }
         }
 
         private void Update()
@@ -50,7 +53,6 @@ namespace DD.Combat
                 healthBar.SetActive(true);
             }
 
-            transform.rotation = Camera.main.transform.rotation;
             currentHealth = health.health;
 
             Vector3 healthbarScale = currentHealthObject.transform.localScale;

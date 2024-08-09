@@ -7,17 +7,18 @@ namespace DD.Builder
 {
     public class Builder : MonoBehaviour
     {
-        [Header("Storage")]
+        [Header("Wood Storage")]
         public Storage woodStorage; // The storage object that holds wood
         public int woodNeeded; // The amount of wood needed for the house
         private int woodGathered = 0;
+
+        [Header("Stone Storage")]
         public bool needsStone; // Toggle option for requiring stone
         public Storage stoneStorage; // The storage object that holds stone (if needed)
         public int stoneNeeded; // The amount of stone needed for the house
         private int stoneGathered = 0;
 
         [Header("Building & Function")]
-
         public GameObject floor; // The floor GameObject
         public GameObject walls; // The walls GameObject
         public GameObject roof; // The roof GameObject
@@ -26,8 +27,8 @@ namespace DD.Builder
         public GameObject resourceUnlock; // The resource GameObject
         private bool unlocksFunction = false;
 
-        [Header("Upgrades")]
-        public GameObject upgradeButton;
+        // [Header("Upgrades")]
+        // public GameObject upgradeButton;
 
         [Header("Preview")]
         public GameObject previewPrefab;
@@ -51,7 +52,10 @@ namespace DD.Builder
                 floor.SetActive(true);
                 walls.SetActive(true);
                 roof.SetActive(true);
-                Destroy(stoneStorage.gameObject);
+                if(needsStone)
+                {
+                    Destroy(stoneStorage.gameObject);
+                }
                 Destroy(woodStorage.gameObject);
             }
             if (woodStorage != null)
@@ -64,10 +68,10 @@ namespace DD.Builder
                 stoneStorage.maxCapacity = stoneNeeded;
             }
 
-            if (upgradeButton != null)
-            {
-                upgradeButton.SetActive(false);
-            }
+            // if (upgradeButton != null)
+            // {
+            //     upgradeButton.SetActive(false);
+            // }
         }
 
         public void DisableBuilding()
@@ -101,7 +105,7 @@ namespace DD.Builder
         {
             UnlockResource();
             UnlockFunction();
-            UnlockUpgrade();
+            // UnlockUpgrade();
             CleanUp();
         }
 
@@ -160,13 +164,13 @@ namespace DD.Builder
             }
         }
 
-        void UnlockUpgrade()
-        {
-            if (upgradeButton != null)
-            {
-                upgradeButton.SetActive(true);
-            }
-        }
+        // void UnlockUpgrade()
+        // {
+        //     if (upgradeButton != null)
+        //     {
+        //         upgradeButton.SetActive(true);
+        //     }
+        // }
         
 
         void CleanUp()

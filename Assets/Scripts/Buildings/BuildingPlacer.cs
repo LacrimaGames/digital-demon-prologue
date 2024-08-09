@@ -13,6 +13,7 @@ namespace DD.Builder.Buildings
         public LayerMask structuresPlacementGround;
         public LayerMask towerPlacementGround;
         public LayerMask placementBlocker;
+        public LayerMask ui;
 
         BoxCollider prefabCollider;
 
@@ -49,12 +50,16 @@ namespace DD.Builder.Buildings
                 CancelPlacing();
                 return;
             }
+            
+            if (Input.GetMouseButtonDown(1) || Input.GetKey(KeyCode.Escape) || Input.GetButton("Cancel")) // Right mouse button to cancel
+            {
+                CancelPlacing();
+            }
 
             if (isPlacing)
             {
                 HandlePlacement();
             }
-            // Add more keys as needed for other buildings
         }
 
         public void StartPlacingBuilding(int prefabIndex)
@@ -75,7 +80,6 @@ namespace DD.Builder.Buildings
             }
         }
 
-
         void HandlePlacement()
         {
             // Enable for controller
@@ -89,9 +93,10 @@ namespace DD.Builder.Buildings
             {
                 prefabPreview.transform.position = hit.point;
 
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, placementBlocker) || !IsPlacementValid())
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, placementBlocker) || Physics.Raycast(ray, out hit, Mathf.Infinity, ui) || !IsPlacementValid())
                 {
                     Debug.Log("Cannot Place here");
+                    return;
                 }
                 else if (IsPlacementValid())
                 {
@@ -118,10 +123,7 @@ namespace DD.Builder.Buildings
                         Debug.Log("Invalid placement: The whole prefab is not on the ground.");
                     }
                 }
-                else if (Input.GetMouseButtonDown(1) || Input.GetKey(KeyCode.Escape) || Input.GetButton("Cancel")) // Right mouse button to cancel
-                {
-                    CancelPlacing();
-                }
+
             }
         }
 

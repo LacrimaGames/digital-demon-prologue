@@ -28,7 +28,7 @@ namespace DD.Builder.Buildings
         private float fireCooldown = 0f;
         private Health health;
 
-        public GameObject tooltipCollection;
+        // public GameObject tooltipCollection;
 
         public enum Priority
         {
@@ -41,7 +41,7 @@ namespace DD.Builder.Buildings
 
         private void Start()
         {
-            tooltipCollection.transform.rotation = Camera.main.transform.rotation;
+            // tooltipCollection.transform.rotation = Camera.main.transform.rotation;
             health = GetComponent<Health>();
 
             if (GlobalModifiers.instance != null)
@@ -88,21 +88,21 @@ namespace DD.Builder.Buildings
                             detectionRadius = tier1Modifiers.detectionRadius;
                             fireRate = tier1Modifiers.fireRate;
                             damage = tier1Modifiers.damage;
-                            health.health = tier1Modifiers.health;
+                            // health.health = tier1Modifiers.health;
                             break;
                         case 2:
                             GlobalModifiers.Tier2TowerModifiers tier2Modifiers = GlobalModifiers.instance.LoadTier2TowerModifiers();
                             detectionRadius = tier2Modifiers.detectionRadius;
                             fireRate = tier2Modifiers.fireRate;
                             damage = tier2Modifiers.damage;
-                            health.health = tier2Modifiers.health;
+                            // health.health = tier2Modifiers.health;
                             break;
                         case 3:
                             GlobalModifiers.Tier3TowerModifiers tier3Modifiers = GlobalModifiers.instance.LoadTier3TowerModifiers();
                             detectionRadius = tier3Modifiers.detectionRadius;
                             fireRate = tier3Modifiers.fireRate;
                             damage = tier3Modifiers.damage;
-                            health.health = tier3Modifiers.health;
+                            // health.health = tier3Modifiers.health;
                             break;
                     }
                 }

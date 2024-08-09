@@ -3,7 +3,7 @@ using DD.Builder.Buildings;
 using DD.Core;
 using UnityEngine;
 
-namespace DD.Bilder
+namespace DD.Builder
 {
     public class Upgrader : MonoBehaviour
     {
@@ -11,15 +11,11 @@ namespace DD.Bilder
         public GameObject upgradeButton;
         public int cost;
 
-        public LayerMask upgradeMask;
-
         [Header("UI")]
         public TextMesh tooltipTextMesh; // Reference to the TextMesh component for displaying resources
         private Coroutine tooltip;
         public bool replacesOldBuilding = true;
         public bool canUpgrade = true;
-        public GameObject acceptButton;
-        public GameObject denyButton;
 
         private void Start()
         {
@@ -30,52 +26,12 @@ namespace DD.Bilder
             else
             {
                 upgradeButton.SetActive(true);
-                acceptButton = upgradeButton.transform.GetChild(0).gameObject;
-                denyButton = upgradeButton.transform.GetChild(1).gameObject;
-                upgradeButton.transform.rotation = Camera.main.transform.rotation;
             }
 
             if (upgradePrefab == null)
             {
-                Destroy(upgradeButton);
+                upgradeButton.SetActive(false);
                 Destroy(GetComponent<Upgrader>());
-            }
-        }
-
-        private void Update()
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit;
-
-            if (Physics.Raycast(ray, out hit, Mathf.Infinity, upgradeMask))
-            {
-                if (hit.collider.gameObject == upgradeButton && Input.GetMouseButtonDown(0))
-                {
-                    if(acceptButton.activeSelf)
-                    {
-                        upgradeButton.GetComponent<Animation>().clip = upgradeButton.GetComponent<Animation>().GetClip("CloseUpgradeTooltip");
-                        upgradeButton.GetComponent<Animation>().Play();
-                    }
-                    else
-                    {
-                        upgradeButton.GetComponent<Animation>().clip = upgradeButton.GetComponent<Animation>().GetClip("OpenUpgradeTooltip");
-                        upgradeButton.GetComponent<Animation>().Play();
-                    }
-                }
-                if (hit.collider.gameObject == acceptButton && Input.GetMouseButtonDown(0))
-                {
-                    ReplacePrefab();
-                }
-                if (hit.collider.gameObject == denyButton && Input.GetMouseButtonDown(0))
-                {
-                    upgradeButton.GetComponent<Animation>().clip = upgradeButton.GetComponent<Animation>().GetClip("CloseUpgradeTooltip");
-                    upgradeButton.GetComponent<Animation>().Play();
-                }
-                else if(Input.GetMouseButtonDown(1) || Input.GetKeyDown(KeyCode.Escape))
-                {
-                    upgradeButton.GetComponent<Animation>().clip = upgradeButton.GetComponent<Animation>().GetClip("CloseUpgradeTooltip");
-                    upgradeButton.GetComponent<Animation>().Play();
-                }
             }
         }
 
